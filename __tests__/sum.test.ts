@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { sum } from "../src/lib/sum";
 
+import {sum} from "../src"
 
 describe("Math OPS",()=>{
     it("Should sum",()=>{
