@@ -1,0 +1,22 @@
+{
+  "name": "ethereum-wallet-cli",
+  "version": "1.0.0",
+  "description": "A ethereum wallet CLI for learning purposes",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Mateus Navarro",
+  "license": "MIT",
+  "devDependencies": {
+    "tsx": "^4.9.4",
+    "typescript": "^5.4.5",
+    "vitest": "^1.6.0"
+  },
+  "dependencies": {
+    "ethers": "^6.12.1"
+  }
+}
