@@ -6,9 +6,11 @@
     "doc": "docs"
   },
   "scripts": {
+    "dev":"npx tsx --watch src/index.ts",
     "test": "npx vitest --config ./vitest.config.ts --run",
     "test:dev": "npx vitest --config ./vitest.config.ts",
-    "coverage": "npx vitest --coverage"
+    "coverage": "npx vitest --coverage",
+    "build":"npx tsc"
   },
   "keywords": [],
   "author": "Mateus Navarro",
