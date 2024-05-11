@@ -1,4 +1,4 @@
-export const mainnet = {
+ const mainnet = {
     id: 1,
     name: "Ethereum",
     nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
@@ -28,7 +28,7 @@ export const mainnet = {
       },
     },
   };
-export const fantomTestnet = {
+ const fantomTestnet = {
   id: 4_002,
   name: "Fantom Testnet",
   nativeCurrency: {
@@ -55,7 +55,7 @@ export const fantomTestnet = {
 };
 
 
-export const sepolia = {
+ const sepolia = {
   id: 11_155_111,
   name: "Sepolia",
   nativeCurrency: { name: "Sepolia Ether", symbol: "ETH", decimals: 18 },
@@ -84,3 +84,8 @@ export const sepolia = {
   },
   testnet: true,
 };
+export const standardChains = {
+    mainnet,
+    fantomTestnet,
+    sepolia,
+}

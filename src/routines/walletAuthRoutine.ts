@@ -17,7 +17,7 @@ import { LoginOrResetWalletChoices, promptLoginOrResetWallet } from "../utils/pr
 
 let wallet:ethers.Wallet| ethers.HDNodeWallet | null = null;
 
-export async function walletAuthRoutine(callbackRoutine:()=>void){
+export async function walletAuthRoutine(callbackRoutine:()=>Promise<void>){
     if (!fs.existsSync(walletDataPath)) {
         printNewWalletMenu();
         const choice = await promptImportOrCreate();
@@ -37,9 +37,9 @@ export async function walletAuthRoutine(callbackRoutine:()=>void){
             }
             fs.writeFileSync(walletDataPath, encryptedJsonWallet);
             printSuccessWalletCreation();
-            callbackRoutine();
+            await callbackRoutine();
           } else {
-            callbackRoutine();
+            await callbackRoutine();
           }
         } else if (choice == ImportOrCreateChoices.IMPORT) {
           const mnemonic = await promptRequestMnemonic()
@@ -52,7 +52,7 @@ export async function walletAuthRoutine(callbackRoutine:()=>void){
           }
           fs.writeFileSync(walletDataPath, encryptedJsonWallet);
           printImportedWalletSuccess();
-          callbackRoutine();
+          await callbackRoutine();
         }
       }else if(!wallet){
         const loginOrResetChoice = await promptLoginOrResetWallet()
@@ -62,7 +62,7 @@ export async function walletAuthRoutine(callbackRoutine:()=>void){
           }
           
           wallet= null
-          callbackRoutine()
+          await callbackRoutine()
         }else if(loginOrResetChoice == LoginOrResetWalletChoices.LOGIN){
           const loginPassword = await promptLoginWalletPassword();
           const jsonWallet =  fs.readFileSync(walletDataPath, "utf-8");

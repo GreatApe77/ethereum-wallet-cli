@@ -22,6 +22,7 @@ import { promptRequestMnemonic } from "./utils/prompts/promptRequestMnemonic.js"
 import { printImportedWalletSuccess } from "./utils/logs/printImportedWalletSuccess.js";
 import { walletDataPath,walletDataDir } from "./constants/paths.js";
 import { walletAuthRoutine } from "./routines/walletAuthRoutine.js";
+import { mainMenuRoutine } from "./routines/mainMenuRoutine.js";
 
 
 
@@ -29,7 +30,7 @@ async function main() {
   await printAsciiArt("TermiWallet!");
   console.log(chalk.italic.bold("Your favorite Ethereum CLI!"));
   await walletAuthRoutine(main)
-  console.log("Menu")
+  await mainMenuRoutine()
   //console.log(JSON.parse(jsonWallet));
 }
 
