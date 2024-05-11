@@ -13,12 +13,18 @@ import { printMnemonic } from "./utils/logs/printMnemonic";
 import { printLineSpace } from "./utils/logs/printLineSpace";
 import { printSaveMnemonicAlert } from "./utils/logs/printSaveMnemonicAlert";
 import { printExplainMnemonicPhrase } from "./utils/logs/printExplainMnemonicPhrase";
+import { promptConfirmMnemonicIsSafe } from "./utils/prompts/promptConfirmMnemonicIsSafe";
+import { promptCreatePasswordForWallet } from "./utils/prompts/promptCreatePasswordForWallet";
+import { printSuccessWalletCreation } from "./utils/logs/printSuccessWalletCreation";
 let wallet: ethers.HDNodeWallet | ethers.Wallet;
+
+const walletDataPath = path.resolve(__dirname, "..", "wallet-data", "wallet.json");
+const walletDataDir = path.resolve(__dirname, "..", "wallet-data");
 async function main() {
   await printAsciiArt("TermiWallet!");
   console.log(chalk.italic.bold("Your favorite Ethereum CLI!"));
 
-  if (fs.existsSync(path.resolve(__dirname, "..", "wallet-data", "wallet.json"))) {
+  if (!fs.existsSync(walletDataPath)) {
     printNewWalletMenu();
     const choice = await promptImportOrCreate();
     if (choice == ImportOrCreateChoices.CREATE_NEW_WALLET) {
@@ -27,6 +33,20 @@ async function main() {
       printExplainMnemonicPhrase()
       printMnemonic(wallet.mnemonic?.phrase!)
       printSaveMnemonicAlert()
+      const storedMnemonicConfirmation = await promptConfirmMnemonicIsSafe()
+      if(storedMnemonicConfirmation){
+        const createdPassword = await promptCreatePasswordForWallet()
+        const encryptedJsonWallet = await wallet.encrypt(createdPassword)
+        
+        if(!fs.existsSync(walletDataDir)){
+          fs.mkdirSync(walletDataDir)
+        }
+        fs.writeFileSync(walletDataPath,encryptedJsonWallet)
+        printSuccessWalletCreation()
+        main()
+      }else{
+        main()
+      }
     } else if (choice == ImportOrCreateChoices.IMPORT) {
     }
   }
