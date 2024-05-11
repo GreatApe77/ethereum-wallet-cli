@@ -13,6 +13,7 @@ import { promptImportOrCreate, ImportOrCreateChoices } from "../utils/prompts/pr
 import { promptLoginWalletPassword } from "../utils/prompts/promptLoginWalletPassword.js";
 import { promptRequestMnemonic } from "../utils/prompts/promptRequestMnemonic.js";
 import fs from "node:fs";
+import { LoginOrResetWalletChoices, promptLoginOrResetWallet } from "../utils/prompts/promptLoginOrResetWallet.js";
 
 let wallet:ethers.Wallet| ethers.HDNodeWallet | null = null;
 
@@ -43,6 +44,7 @@ export async function walletAuthRoutine(callbackRoutine:()=>void){
         } else if (choice == ImportOrCreateChoices.IMPORT) {
           const mnemonic = await promptRequestMnemonic()
           wallet = ethers.Wallet.fromPhrase(mnemonic)
+          
           const createdPassword = await promptCreatePasswordForWallet();
           const encryptedJsonWallet = await wallet.encrypt(createdPassword);
           if (!fs.existsSync(walletDataDir)) {
@@ -53,9 +55,20 @@ export async function walletAuthRoutine(callbackRoutine:()=>void){
           callbackRoutine();
         }
       }else if(!wallet){
-        const loginPassword = await promptLoginWalletPassword();
-        const jsonWallet =  fs.readFileSync(walletDataPath, "utf-8");
-        wallet = await ethers.Wallet.fromEncryptedJson(jsonWallet,loginPassword)
+        const loginOrResetChoice = await promptLoginOrResetWallet()
+        if(loginOrResetChoice == LoginOrResetWalletChoices.RESET_WALLET){
+          if(fs.existsSync(walletDataPath)){
+            fs.rmSync(walletDataPath)
+          }
+          
+          wallet= null
+          callbackRoutine()
+        }else if(loginOrResetChoice == LoginOrResetWalletChoices.LOGIN){
+          const loginPassword = await promptLoginWalletPassword();
+          const jsonWallet =  fs.readFileSync(walletDataPath, "utf-8");
+          wallet = await ethers.Wallet.fromEncryptedJson(jsonWallet,loginPassword)
+
+        }
     
       }
 }
