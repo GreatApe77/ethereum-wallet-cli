@@ -20,55 +20,16 @@ import { printSuccessWalletCreation } from "./utils/logs/printSuccessWalletCreat
 import { promptLoginWalletPassword } from "./utils/prompts/promptLoginWalletPassword.js";
 import { promptRequestMnemonic } from "./utils/prompts/promptRequestMnemonic.js";
 import { printImportedWalletSuccess } from "./utils/logs/printImportedWalletSuccess.js";
-let wallet: ethers.HDNodeWallet | ethers.Wallet | null = null;
+import { walletDataPath,walletDataDir } from "./constants/paths.js";
+import { walletAuthRoutine } from "./routines/walletAuthRoutine.js";
 
-const walletDataPath = path.resolve("wallet-data", "wallet.json");
-const walletDataDir = path.resolve("wallet-data");
+
+
 async function main() {
   await printAsciiArt("TermiWallet!");
   console.log(chalk.italic.bold("Your favorite Ethereum CLI!"));
-
-  if (!fs.existsSync(walletDataPath)) {
-    printNewWalletMenu();
-    const choice = await promptImportOrCreate();
-    if (choice == ImportOrCreateChoices.CREATE_NEW_WALLET) {
-      wallet = ethers.Wallet.createRandom();
-      printLineSpace();
-      printExplainMnemonicPhrase();
-      printMnemonic(wallet.mnemonic?.phrase!);
-      printSaveMnemonicAlert();
-      const storedMnemonicConfirmation = await promptConfirmMnemonicIsSafe();
-      if (storedMnemonicConfirmation) {
-        const createdPassword = await promptCreatePasswordForWallet();
-        const encryptedJsonWallet = await wallet.encrypt(createdPassword);
-
-        if (!fs.existsSync(walletDataDir)) {
-          fs.mkdirSync(walletDataDir);
-        }
-        fs.writeFileSync(walletDataPath, encryptedJsonWallet);
-        printSuccessWalletCreation();
-        main();
-      } else {
-        main();
-      }
-    } else if (choice == ImportOrCreateChoices.IMPORT) {
-      const mnemonic = await promptRequestMnemonic()
-      wallet = ethers.Wallet.fromPhrase(mnemonic)
-      const createdPassword = await promptCreatePasswordForWallet();
-      const encryptedJsonWallet = await wallet.encrypt(createdPassword);
-      if (!fs.existsSync(walletDataDir)) {
-        fs.mkdirSync(walletDataDir);
-      }
-      fs.writeFileSync(walletDataPath, encryptedJsonWallet);
-      printImportedWalletSuccess();
-      main();
-    }
-  }else{
-    const loginPassword = await promptLoginWalletPassword();
-    const jsonWallet =  fs.readFileSync(walletDataPath, "utf-8");
-    wallet = await ethers.Wallet.fromEncryptedJson(jsonWallet,loginPassword)
-
-  }
+  await walletAuthRoutine(main)
+  console.log("Menu")
   //console.log(JSON.parse(jsonWallet));
 }
 
