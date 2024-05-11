@@ -1,29 +1,30 @@
-import { printAsciiArt } from "./utils/logs/printTitle";
+import { printAsciiArt } from "./utils/logs/printTitle.js";
 import chalk from "chalk";
 import path from "node:path";
 import fs from "fs";
-import inquirer from "inquirer";
-import { printNewWalletMenu } from "./utils/logs/printNewWalletMenu";
+
+import { printNewWalletMenu } from "./utils/logs/printNewWalletMenu.js";
+//import { __dirname } from "./constants/__dirname.js";
 import { ethers } from "ethers";
 import {
   ImportOrCreateChoices,
   promptImportOrCreate,
-} from "./utils/prompts/promptImportOrCreateWallet";
-import { printMnemonic } from "./utils/logs/printMnemonic";
-import { printLineSpace } from "./utils/logs/printLineSpace";
-import { printSaveMnemonicAlert } from "./utils/logs/printSaveMnemonicAlert";
-import { printExplainMnemonicPhrase } from "./utils/logs/printExplainMnemonicPhrase";
-import { promptConfirmMnemonicIsSafe } from "./utils/prompts/promptConfirmMnemonicIsSafe";
-import { promptCreatePasswordForWallet } from "./utils/prompts/promptCreatePasswordForWallet";
-import { printSuccessWalletCreation } from "./utils/logs/printSuccessWalletCreation";
+} from "./utils/prompts/promptImportOrCreateWallet.js";
+import { printMnemonic } from "./utils/logs/printMnemonic.js";
+import { printLineSpace } from "./utils/logs/printLineSpace.js";
+import { printSaveMnemonicAlert } from "./utils/logs/printSaveMnemonicAlert.js";
+import { printExplainMnemonicPhrase } from "./utils/logs/printExplainMnemonicPhrase.js";
+import { promptConfirmMnemonicIsSafe } from "./utils/prompts/promptConfirmMnemonicIsSafe.js";
+import { promptCreatePasswordForWallet } from "./utils/prompts/promptCreatePasswordForWallet.js";
+import { printSuccessWalletCreation } from "./utils/logs/printSuccessWalletCreation.js";
 let wallet: ethers.HDNodeWallet | ethers.Wallet;
 
-const walletDataPath = path.resolve(__dirname, "..", "wallet-data", "wallet.json");
-const walletDataDir = path.resolve(__dirname, "..", "wallet-data");
+const walletDataPath = path.resolve( "wallet-data", "wallet.json");
+const walletDataDir = path.resolve(  "wallet-data");
 async function main() {
   await printAsciiArt("TermiWallet!");
   console.log(chalk.italic.bold("Your favorite Ethereum CLI!"));
-
+  
   if (!fs.existsSync(walletDataPath)) {
     printNewWalletMenu();
     const choice = await promptImportOrCreate();

@@ -2,6 +2,7 @@
   "name": "ethereum-wallet-cli",
   "version": "1.0.0",
   "description": "A ethereum wallet CLI for learning purposes",
+  "type": "module",
   "directories": {
     "doc": "docs"
   },
