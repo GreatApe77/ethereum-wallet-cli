@@ -17,7 +17,8 @@ import { printExplainMnemonicPhrase } from "./utils/logs/printExplainMnemonicPhr
 import { promptConfirmMnemonicIsSafe } from "./utils/prompts/promptConfirmMnemonicIsSafe.js";
 import { promptCreatePasswordForWallet } from "./utils/prompts/promptCreatePasswordForWallet.js";
 import { printSuccessWalletCreation } from "./utils/logs/printSuccessWalletCreation.js";
-let wallet: ethers.HDNodeWallet | ethers.Wallet;
+import { promptLoginWalletPassword } from "./utils/prompts/promptLoginWalletPassword.js";
+let wallet: ethers.HDNodeWallet | ethers.Wallet | null =null;
 
 const walletDataPath = path.resolve( "wallet-data", "wallet.json");
 const walletDataDir = path.resolve(  "wallet-data");
@@ -49,6 +50,8 @@ async function main() {
         main()
       }
     } else if (choice == ImportOrCreateChoices.IMPORT) {
+      const loginPassword = await promptLoginWalletPassword()
+      
     }
   }
 }
