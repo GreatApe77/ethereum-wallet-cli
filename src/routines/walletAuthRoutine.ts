@@ -16,7 +16,7 @@ import fs from "node:fs";
 
 let wallet:ethers.Wallet| ethers.HDNodeWallet | null = null;
 
-export async function walletAuthRoutine(fallbackRoutine:()=>void){
+export async function walletAuthRoutine(callbackRoutine:()=>void){
     if (!fs.existsSync(walletDataPath)) {
         printNewWalletMenu();
         const choice = await promptImportOrCreate();
@@ -36,9 +36,9 @@ export async function walletAuthRoutine(fallbackRoutine:()=>void){
             }
             fs.writeFileSync(walletDataPath, encryptedJsonWallet);
             printSuccessWalletCreation();
-            fallbackRoutine();
+            callbackRoutine();
           } else {
-            fallbackRoutine();
+            callbackRoutine();
           }
         } else if (choice == ImportOrCreateChoices.IMPORT) {
           const mnemonic = await promptRequestMnemonic()
@@ -50,7 +50,7 @@ export async function walletAuthRoutine(fallbackRoutine:()=>void){
           }
           fs.writeFileSync(walletDataPath, encryptedJsonWallet);
           printImportedWalletSuccess();
-          fallbackRoutine();
+          callbackRoutine();
         }
       }else if(!wallet){
         const loginPassword = await promptLoginWalletPassword();
