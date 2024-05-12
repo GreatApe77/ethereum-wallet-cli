@@ -15,7 +15,7 @@ import { promptRequestMnemonic } from "../utils/prompts/promptRequestMnemonic.js
 import fs from "node:fs";
 import { LoginOrResetWalletChoices, promptLoginOrResetWallet } from "../utils/prompts/promptLoginOrResetWallet.js";
 
-let wallet:ethers.Wallet| ethers.HDNodeWallet | null = null;
+export let wallet:ethers.Wallet| ethers.HDNodeWallet | null = null;
 
 export async function walletAuthRoutine(callbackRoutine:()=>Promise<void>){
     if (!fs.existsSync(walletDataPath)) {

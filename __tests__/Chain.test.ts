@@ -6,12 +6,21 @@ describe('Chain', () => {
         const chain = new Chain({
             chainId: 1,
             name: "Ethereum",
-            nativeCurrency: "ETH",
+            nativeCurrency: {
+                decimals: 18,
+                name: "Ethereum",
+                symbol: "ETH"
+            },
             rpcUrl: "https:rpcurl.com"
         })
         expect(chain.chainId).toBe(1)
         expect(chain.name).toBe("Ethereum")
-        expect(chain.nativeCurrency).toBe("ETH")
+        //expect(chain.nativeCurrency).toBe("ETH")
         expect(chain.rpcUrl).toBe("https:rpcurl.com")
+        expect(chain.nativeCurrency).toEqual({
+            decimals: 18,
+            name: "Ethereum",
+            symbol: "ETH"
+        })
     })
  })

@@ -9,7 +9,11 @@ describe("ChainFile",()=>{
             chainsById:{
                 1:new Chain({
                     name:"Ethereum",
-                    nativeCurrency:"ETH",
+                    nativeCurrency:{
+                        decimals:18,
+                        name:"Ethereum",
+                        symbol:"ETH"
+                    },
                     chainId:1,
                     rpcUrl:"https://rpcurl.com"
                 })
@@ -20,6 +24,11 @@ describe("ChainFile",()=>{
         expect(chainsFile.lastSelectedChainId).toBe(1)
         expect(chainsFile.chainsById[1].name).toBe("Ethereum")
         expect(chainsFile.chainsById[chainsFile.lastSelectedChainId].rpcUrl).toBe("https://rpcurl.com")
-        
+        expect(chainsFile.chainsById[chainsFile.lastSelectedChainId].nativeCurrency).toEqual({
+            decimals:18,
+            name:"Ethereum",
+            symbol:"ETH"
+        })
+        expect(chainsFile.chainsById[chainsFile.lastSelectedChainId].chainId).toBe(1)
     })
 })

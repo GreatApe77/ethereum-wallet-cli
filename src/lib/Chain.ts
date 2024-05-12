@@ -1,7 +1,13 @@
+type NativeCurrency = {
+    name:string
+    symbol:string
+    decimals:number
+
+}
 export class Chain{
     
     public name:string
-    public nativeCurrency:string
+    public nativeCurrency:NativeCurrency
     public chainId:number
     public rpcUrl:string
     constructor(props:Chain){
