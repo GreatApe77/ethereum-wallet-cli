@@ -8,6 +8,10 @@ import { writeStandardChains } from "../utils/writeStandardChains.js";
 import { ChainsFile } from "../lib/ChainsFile.js";
 import { loadChainsFile } from "../utils/loadChainsFile.js";
 import { wallet } from "./walletAuthRoutine.js";
+import {
+  MainMenuOptions,
+  promptMainMenuOptions,
+} from "../utils/prompts/main-menu/promptMainMenuOptions.js";
 let provider: ethers.JsonRpcProvider | null = null;
 let chainsFile: ChainsFile | null = null;
 export async function mainMenuRoutine() {
@@ -29,4 +33,19 @@ export async function mainMenuRoutine() {
       chainsFile.chainsById[chainsFile.lastSelectedChainId].nativeCurrency
         .symbol,
   });
+
+  const choice = await promptMainMenuOptions();
+  switch (choice) {
+    case MainMenuOptions.OPTION_1:
+      console.log("Option 1 selected");
+      break;
+    case MainMenuOptions.OPTION_2:
+      console.log("Option 2 selected");
+      break;
+    case MainMenuOptions.OPTION_3:
+      console.log("Option 3 selected");
+      break;
+    default:
+      break;
+  }
 }

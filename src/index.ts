@@ -2,13 +2,14 @@ import { printAsciiArt } from "./utils/printing/printTitle.js";
 import chalk from "chalk";
 
 import { walletAuthRoutine } from "./routines/walletAuthRoutine.js";
+import { mainMenuRoutine } from "./routines/mainMenuRoutine.js";
 
 
 async function main() {
   await printAsciiArt("TermiWallet!");
   console.log(chalk.italic.bold("Your favorite Ethereum CLI!"));
   await walletAuthRoutine();
- //await mainMenuRoutine();
+  await mainMenuRoutine();
   //console.log(JSON.parse(jsonWallet));
 }
 
