@@ -7,19 +7,21 @@ import { printMnemonic } from "../utils/printing/printMnemonic.js";
 import { printNewWalletMenu } from "../utils/printing/printNewWalletMenu.js";
 import { printSaveMnemonicAlert } from "../utils/printing/printSaveMnemonicAlert.js";
 import { printSuccessWalletCreation } from "../utils/printing/printSuccessWalletCreation.js";
-import { promptConfirmMnemonicIsSafe } from "../utils/prompts/promptConfirmMnemonicIsSafe.js";
-import { promptCreatePasswordForWallet } from "../utils/prompts/promptCreatePasswordForWallet.js";
+import { promptConfirmMnemonicIsSafe } from "../utils/prompts/wallet-auth/promptConfirmMnemonicIsSafe.js";
+import { promptCreatePasswordForWallet } from "../utils/prompts/wallet-auth/promptCreatePasswordForWallet.js";
 import {
   promptImportOrCreate,
   ImportOrCreateChoices,
-} from "../utils/prompts/promptImportOrCreateWallet.js";
-import { promptLoginWalletPassword } from "../utils/prompts/promptLoginWalletPassword.js";
-import { promptRequestMnemonic } from "../utils/prompts/promptRequestMnemonic.js";
+} from "../utils/prompts/wallet-auth/promptImportOrCreateWallet.js";
+import { promptLoginWalletPassword } from "../utils/prompts/wallet-auth/promptLoginWalletPassword.js";
+import { promptRequestMnemonic } from "../utils/prompts/wallet-auth/promptRequestMnemonic.js";
 import fs from "node:fs";
 import {
   LoginOrResetWalletChoices,
   promptLoginOrResetWallet,
-} from "../utils/prompts/promptLoginOrResetWallet.js";
+} from "../utils/prompts/wallet-auth/promptLoginOrResetWallet.js";
+import { promptResetWalletConfirmation } from "../utils/prompts/wallet-auth/promptResetWallet.js";
+import { actionFeedback } from "../components/actionFeedback.js";
 
 export let wallet: ethers.Wallet | ethers.HDNodeWallet | null = null;
 
@@ -63,12 +65,24 @@ export async function walletAuthRoutine() {
   } else{
     const loginOrResetChoice = await promptLoginOrResetWallet();
     if (loginOrResetChoice == LoginOrResetWalletChoices.RESET_WALLET) {
-      if (fs.existsSync(walletDataPath)) {
+      const confirmation = await promptResetWalletConfirmation()
+      if(confirmation){
+        if (fs.existsSync(walletDataPath)) {
+          fs.rmSync(walletDataPath);
+        }
+        wallet = null;
+        actionFeedback("Wallet reset successfully", "success")
+        await walletAuthRoutine();
+      }else{
+        actionFeedback("Wallet reset cancelled", "warning")
+        await walletAuthRoutine();
+      }
+      /* if (fs.existsSync(walletDataPath)) {
         fs.rmSync(walletDataPath);
       }
 
       wallet = null;
-      await walletAuthRoutine();
+      await walletAuthRoutine(); */
     } else if (loginOrResetChoice == LoginOrResetWalletChoices.LOGIN) {
       const loginPassword = await promptLoginWalletPassword();
       const jsonWallet = fs.readFileSync(walletDataPath, "utf-8");

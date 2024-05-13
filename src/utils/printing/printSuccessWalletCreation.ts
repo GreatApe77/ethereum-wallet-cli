@@ -1,8 +1,6 @@
-import chalk from "chalk";
-import { printLineSpace } from "./printLineSpace.js";
+
+import { actionFeedback } from "../../components/actionFeedback.js";
 
 export function printSuccessWalletCreation(){
-    printLineSpace()
-    console.log(chalk.bold.greenBright("Wallet successfully created!"))
-    printLineSpace()
+    actionFeedback("Wallet created successfully", "success")
 }
