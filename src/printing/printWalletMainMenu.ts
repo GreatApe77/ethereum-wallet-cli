@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import { printLineSpace } from "./printLineSpace.js";
+
 
 type MenuProps = {
   connectedChain: string;

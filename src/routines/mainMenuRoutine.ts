@@ -1,7 +1,5 @@
 import { ethers } from "ethers";
-import { printLineSpace } from "../utils/printing/printLineSpace.js";
-import { printNewWalletMenu } from "../utils/printing/printNewWalletMenu.js";
-import { printWalletMainMenu } from "../utils/printing/printWalletMainMenu.js";
+
 import fs from "node:fs";
 import { savedChainsPath } from "../constants/paths.js";
 import { writeStandardChains } from "../utils/writeStandardChains.js";
@@ -11,7 +9,8 @@ import { wallet } from "./walletAuthRoutine.js";
 import {
   MainMenuOptions,
   promptMainMenuOptions,
-} from "../utils/prompts/main-menu/promptMainMenuOptions.js";
+} from "../prompts/main-menu/promptMainMenuOptions.js";
+import { printWalletMainMenu } from "../printing/printWalletMainMenu.js";
 let provider: ethers.JsonRpcProvider | null = null;
 let chainsFile: ChainsFile | null = null;
 export async function mainMenuRoutine() {

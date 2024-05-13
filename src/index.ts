@@ -2,7 +2,7 @@
 
 import { walletAuthRoutine } from "./routines/walletAuthRoutine.js";
 import { mainMenuRoutine } from "./routines/mainMenuRoutine.js";
-import { printMainTitle } from "./utils/printing/printMainTitle.js";
+import { printMainTitle } from "./printing/printMainTitle.js";
 
 
 async function main() {

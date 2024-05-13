@@ -1,27 +1,28 @@
 import { ethers } from "ethers";
 import { walletDataPath, walletDataDir } from "../constants/paths.js";
-import { printExplainMnemonicPhrase } from "../utils/printing/printExplainMnemonicPhrase.js";
-import { printImportedWalletSuccess } from "../utils/printing/printImportedWalletSuccess.js";
-import { printLineSpace } from "../utils/printing/printLineSpace.js";
-import { printMnemonic } from "../utils/printing/printMnemonic.js";
-import { printNewWalletMenu } from "../utils/printing/printNewWalletMenu.js";
-import { printSaveMnemonicAlert } from "../utils/printing/printSaveMnemonicAlert.js";
-import { printSuccessWalletCreation } from "../utils/printing/printSuccessWalletCreation.js";
-import { promptConfirmMnemonicIsSafe } from "../utils/prompts/wallet-auth/promptConfirmMnemonicIsSafe.js";
-import { promptCreatePasswordForWallet } from "../utils/prompts/wallet-auth/promptCreatePasswordForWallet.js";
+
+import { promptConfirmMnemonicIsSafe } from "../prompts/wallet-auth/promptConfirmMnemonicIsSafe.js";
+import { promptCreatePasswordForWallet } from "../prompts/wallet-auth/promptCreatePasswordForWallet.js";
 import {
   promptImportOrCreate,
   ImportOrCreateChoices,
-} from "../utils/prompts/wallet-auth/promptImportOrCreateWallet.js";
-import { promptLoginWalletPassword } from "../utils/prompts/wallet-auth/promptLoginWalletPassword.js";
-import { promptRequestMnemonic } from "../utils/prompts/wallet-auth/promptRequestMnemonic.js";
+} from "../prompts/wallet-auth/promptImportOrCreateWallet.js";
+import { promptLoginWalletPassword } from "../prompts/wallet-auth/promptLoginWalletPassword.js";
+import { promptRequestMnemonic } from "../prompts/wallet-auth/promptRequestMnemonic.js";
 import fs from "node:fs";
 import {
   LoginOrResetWalletChoices,
   promptLoginOrResetWallet,
-} from "../utils/prompts/wallet-auth/promptLoginOrResetWallet.js";
-import { promptResetWalletConfirmation } from "../utils/prompts/wallet-auth/promptResetWallet.js";
+} from "../prompts/wallet-auth/promptLoginOrResetWallet.js";
+import { promptResetWalletConfirmation } from "../prompts/wallet-auth/promptResetWallet.js";
 import { actionFeedback } from "../components/actionFeedback.js";
+import { printExplainMnemonicPhrase } from "../printing/printExplainMnemonicPhrase.js";
+import { printImportedWalletSuccess } from "../printing/printImportedWalletSuccess.js";
+import { printLineSpace } from "../printing/printLineSpace.js";
+import { printMnemonic } from "../printing/printMnemonic.js";
+import { printNewWalletMenu } from "../printing/printNewWalletMenu.js";
+import { printSaveMnemonicAlert } from "../printing/printSaveMnemonicAlert.js";
+import { printSuccessWalletCreation } from "../printing/printSuccessWalletCreation.js";
 
 export let wallet: ethers.Wallet | ethers.HDNodeWallet | null = null;
 
@@ -62,19 +63,19 @@ export async function walletAuthRoutine() {
       printImportedWalletSuccess();
       await walletAuthRoutine();
     }
-  } else{
+  } else {
     const loginOrResetChoice = await promptLoginOrResetWallet();
     if (loginOrResetChoice == LoginOrResetWalletChoices.RESET_WALLET) {
-      const confirmation = await promptResetWalletConfirmation()
-      if(confirmation){
+      const confirmation = await promptResetWalletConfirmation();
+      if (confirmation) {
         if (fs.existsSync(walletDataPath)) {
           fs.rmSync(walletDataPath);
         }
         wallet = null;
-        actionFeedback("Wallet reset successfully", "success")
+        actionFeedback("Wallet reset successfully", "success");
         await walletAuthRoutine();
-      }else{
-        actionFeedback("Wallet reset cancelled", "warning")
+      } else {
+        actionFeedback("Wallet reset cancelled", "warning");
         await walletAuthRoutine();
       }
       /* if (fs.existsSync(walletDataPath)) {

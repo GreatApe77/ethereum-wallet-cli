@@ -1,6 +1,7 @@
 import chalk, { ChalkInstance } from "chalk";
-import { printLineSpace } from "../utils/printing/printLineSpace.js";
+
 import { printMarginLeft } from "../utils/printMarginLeft.js";
+import { printLineSpace } from "../printing/printLineSpace.js";
 
 type Status = "success" | "error" | "warning" | "info";
 export function actionFeedback(message: string, status: Status) {

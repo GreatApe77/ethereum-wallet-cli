@@ -1,4 +1,4 @@
-import { printMarginLeft } from "../printMarginLeft.js"
+import { printMarginLeft } from "../utils/printMarginLeft.js"
 import { printLineSpace } from "./printLineSpace.js"
 
 export function printNewWalletMenu(){
