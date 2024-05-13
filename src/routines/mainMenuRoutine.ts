@@ -11,9 +11,11 @@ import {
   promptMainMenuOptions,
 } from "../prompts/main-menu/promptMainMenuOptions.js";
 import { printWalletMainMenu } from "../printing/wallet-auth/printWalletMainMenu.js";
+import { spinner } from "../utils/spinner.js";
 let provider: ethers.JsonRpcProvider | null = null;
 let chainsFile: ChainsFile | null = null;
 export async function mainMenuRoutine() {
+  spinner.start()
   if (!fs.existsSync(savedChainsPath)) {
     await writeStandardChains();
   }
@@ -23,7 +25,7 @@ export async function mainMenuRoutine() {
   );
 
   const balance = await provider.getBalance(wallet?.address!);
-
+  spinner.success()
   printWalletMainMenu({
     balance: ethers.formatEther(balance),
     connectedChain: chainsFile.chainsById[chainsFile.lastSelectedChainId].name,

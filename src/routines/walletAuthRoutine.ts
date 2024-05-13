@@ -23,6 +23,7 @@ import { printMnemonic } from "../printing/wallet-auth/printMnemonic.js";
 import { printNewWalletMenu } from "../printing/wallet-auth/printNewWalletMenu.js";
 import { printSaveMnemonicAlert } from "../printing/wallet-auth/printSaveMnemonicAlert.js";
 import { printSuccessWalletCreation } from "../printing/wallet-auth/printSuccessWalletCreation.js";
+import { spinner } from "../utils/spinner.js";
 
 export let wallet: ethers.Wallet | ethers.HDNodeWallet | null = null;
 
@@ -39,12 +40,14 @@ export async function walletAuthRoutine() {
       const storedMnemonicConfirmation = await promptConfirmMnemonicIsSafe();
       if (storedMnemonicConfirmation) {
         const createdPassword = await promptCreatePasswordForWallet();
+        spinner.start()
         const encryptedJsonWallet = await wallet.encrypt(createdPassword);
 
         if (!fs.existsSync(walletDataDir)) {
           fs.mkdirSync(walletDataDir);
         }
         fs.writeFileSync(walletDataPath, encryptedJsonWallet);
+        spinner.success()
         printSuccessWalletCreation();
         await walletAuthRoutine();
       } else {
@@ -87,8 +90,10 @@ export async function walletAuthRoutine() {
       await walletAuthRoutine(); */
     } else if (loginOrResetChoice == LoginOrResetWalletChoices.LOGIN) {
       const loginPassword = await promptLoginWalletPassword();
+      spinner.start()
       const jsonWallet = fs.readFileSync(walletDataPath, "utf-8");
       wallet = await ethers.Wallet.fromEncryptedJson(jsonWallet, loginPassword);
+      spinner.success()
     }
   }
 }
