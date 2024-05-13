@@ -10,5 +10,6 @@ export function printSaveMnemonicAlert(){
     console.log("- Treat your mnemonic phrase with the same level of care as you would treat your physical wallet or valuables.")
     printLineSpace()
     console.log(chalk.bold("IMPORTANT: Write down your mnemonic phrase on a piece of paper and store it in a safe and secure location."))
+    printLineSpace()
 
 }
