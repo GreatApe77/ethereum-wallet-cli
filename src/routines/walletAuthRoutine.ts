@@ -16,13 +16,13 @@ import {
 } from "../prompts/wallet-auth/promptLoginOrResetWallet.js";
 import { promptResetWalletConfirmation } from "../prompts/wallet-auth/promptResetWallet.js";
 import { actionFeedback } from "../components/actionFeedback.js";
-import { printExplainMnemonicPhrase } from "../printing/printExplainMnemonicPhrase.js";
-import { printImportedWalletSuccess } from "../printing/printImportedWalletSuccess.js";
-import { printLineSpace } from "../printing/printLineSpace.js";
-import { printMnemonic } from "../printing/printMnemonic.js";
-import { printNewWalletMenu } from "../printing/printNewWalletMenu.js";
-import { printSaveMnemonicAlert } from "../printing/printSaveMnemonicAlert.js";
-import { printSuccessWalletCreation } from "../printing/printSuccessWalletCreation.js";
+import { printExplainMnemonicPhrase } from "../printing/wallet-auth/printExplainMnemonicPhrase.js";
+import { printImportedWalletSuccess } from "../printing/wallet-auth/printImportedWalletSuccess.js";
+import { printLineSpace } from "../utils/printLineSpace.js";
+import { printMnemonic } from "../printing/wallet-auth/printMnemonic.js";
+import { printNewWalletMenu } from "../printing/wallet-auth/printNewWalletMenu.js";
+import { printSaveMnemonicAlert } from "../printing/wallet-auth/printSaveMnemonicAlert.js";
+import { printSuccessWalletCreation } from "../printing/wallet-auth/printSuccessWalletCreation.js";
 
 export let wallet: ethers.Wallet | ethers.HDNodeWallet | null = null;
 

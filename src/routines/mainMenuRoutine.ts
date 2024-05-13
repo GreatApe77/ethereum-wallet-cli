@@ -10,7 +10,7 @@ import {
   MainMenuOptions,
   promptMainMenuOptions,
 } from "../prompts/main-menu/promptMainMenuOptions.js";
-import { printWalletMainMenu } from "../printing/printWalletMainMenu.js";
+import { printWalletMainMenu } from "../printing/wallet-auth/printWalletMainMenu.js";
 let provider: ethers.JsonRpcProvider | null = null;
 let chainsFile: ChainsFile | null = null;
 export async function mainMenuRoutine() {
