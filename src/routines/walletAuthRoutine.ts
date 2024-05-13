@@ -48,6 +48,7 @@ export async function walletAuthRoutine() {
         printSuccessWalletCreation();
         await walletAuthRoutine();
       } else {
+        actionFeedback("Wallet creation cancelled","warning")
         await walletAuthRoutine();
       }
     } else if (choice == ImportOrCreateChoices.IMPORT) {
