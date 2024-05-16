@@ -1,7 +1,7 @@
 import { ethers } from "ethers";
 
 import fs from "node:fs";
-import { savedChainsPath } from "../constants/paths.js";
+import { savedChainsPath, userOptionsFilePath } from "../constants/paths.js";
 import { writeStandardChains } from "../utils/writeStandardChains.js";
 import { ChainsFile } from "../lib/ChainsFile.js";
 import { loadChainsFile } from "../utils/loadChainsFile.js";
@@ -10,28 +10,36 @@ import {
   MainMenuOptions,
   promptMainMenuOptions,
 } from "../prompts/main-menu/promptMainMenuOptions.js";
-import { printWalletMainMenu } from "../printing/wallet-auth/printWalletMainMenu.js";
+import { printWalletMainMenu } from "../printing/main-menu/printWalletMainMenu.js";
 import { spinner } from "../utils/spinner.js";
-let provider: ethers.JsonRpcProvider | null = null;
-let chainsFile: ChainsFile | null = null;
+import { UserOptionsState } from "../lib/UserOptionsState.js";
+import { writeStandardUserOptionsState } from "../utils/writeStandardUserOptions.js";
+import { loadUserOptionsState } from "../utils/loadUserOptionsState.js";
+let provider: ethers.JsonRpcProvider 
+let chainsFile: ChainsFile 
+let userOptionsState: UserOptionsState 
 export async function mainMenuRoutine() {
   spinner.start()
   if (!fs.existsSync(savedChainsPath)) {
     await writeStandardChains();
   }
-  chainsFile = await loadChainsFile();
+  if(!fs.existsSync(userOptionsFilePath)){
+    await writeStandardUserOptionsState()
+  }
+  //chainsFile = await loadChainsFile();
+  [chainsFile,userOptionsState] = await Promise.all([loadChainsFile(),loadUserOptionsState()])
   provider = new ethers.JsonRpcProvider(
-    chainsFile.chainsById[chainsFile.lastSelectedChainId].rpcUrl
+    chainsFile.chainsById[userOptionsState.chainId].rpcUrl
   );
 
   const balance = await provider.getBalance(wallet?.address!);
   spinner.success()
   printWalletMainMenu({
     balance: ethers.formatEther(balance),
-    connectedChain: chainsFile.chainsById[chainsFile.lastSelectedChainId].name,
+    connectedChain: chainsFile.chainsById[userOptionsState.chainId].name,
     currentAddress: wallet?.address!,
     nativeCurrency:
-      chainsFile.chainsById[chainsFile.lastSelectedChainId].nativeCurrency
+      chainsFile.chainsById[userOptionsState.chainId].nativeCurrency
         .symbol,
   });
 

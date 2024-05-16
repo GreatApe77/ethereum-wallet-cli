@@ -29,7 +29,7 @@ export async function writeStandardChains(){
         [ethereumMainnet.chainId]:ethereumMainnet
     }
     const chainsFile = new ChainsFile({
-        lastSelectedChainId:fantomTestnet.chainId,
+        
         chainsById:chains
    })
    
