@@ -1,5 +1,6 @@
+import { ChainId } from "../types/ChainId.js"
 import { Chain } from "./Chain.js"
-type ChainId = number
+
 export class ChainsFile{
     public lastSelectedChainId:ChainId
     public chainsById:Record<ChainId,Chain>
