@@ -15,6 +15,7 @@ import { spinner } from "../utils/spinner.js";
 import { UserOptionsState } from "../lib/UserOptionsState.js";
 import { writeStandardUserOptionsState } from "../utils/writeStandardUserOptions.js";
 import { loadUserOptionsState } from "../utils/loadUserOptionsState.js";
+import { switchAccountRoutine } from "./switchAccountRoutine.js";
 let provider: ethers.JsonRpcProvider 
 let chainsFile: ChainsFile 
 let userOptionsState: UserOptionsState 
@@ -45,8 +46,8 @@ export async function mainMenuRoutine() {
 
   const choice = await promptMainMenuOptions();
   switch (choice) {
-    case MainMenuOptions.OPTION_1:
-      console.log("Option 1 selected");
+    case MainMenuOptions.SWITCH_ACCOUNT:
+      await switchAccountRoutine()
       break;
     case MainMenuOptions.OPTION_2:
       console.log("Option 2 selected");
