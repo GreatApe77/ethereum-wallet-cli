@@ -34,7 +34,7 @@ export async function walletAuthRoutine() {
     printNewWalletMenu();
     const choice = await promptImportOrCreate();
     if (choice == ImportOrCreateChoices.CREATE_NEW_WALLET) {
-      wallet = ethers.HDNodeWallet.createRandom();
+      wallet = ethers.HDNodeWallet.createRandom(undefined,PARENT_PATH);
       printLineSpace();
       printExplainMnemonicPhrase();
       printMnemonic(wallet.mnemonic?.phrase!);
@@ -59,7 +59,7 @@ export async function walletAuthRoutine() {
     } else if (choice == ImportOrCreateChoices.IMPORT) {
       const mnemonic = await promptRequestMnemonic();
       wallet = ethers.HDNodeWallet.fromPhrase(mnemonic,undefined,PARENT_PATH);
-      wallet = wallet.deriveChild(0)
+      
       const createdPassword = await promptCreatePasswordForWallet();
       const encryptedJsonWallet = await wallet.encrypt(createdPassword);
       if (!fs.existsSync(walletDataDir)) {
@@ -96,13 +96,8 @@ export async function walletAuthRoutine() {
       const jsonWallet = fs.readFileSync(walletDataPath, "utf-8");
       wallet = await ethers.Wallet.fromEncryptedJson(jsonWallet, loginPassword) as ethers.HDNodeWallet;
       wallet = ethers.HDNodeWallet.fromPhrase(wallet.mnemonic?.phrase!,undefined,PARENT_PATH)
-      let accountIndex = 0;
-      if(fs.existsSync(userOptionsFilePath)){
-        const file = JSON.parse(fs.readFileSync(userOptionsFilePath, "utf-8"));
-        const userOptions = new UserOptionsState(file)
-        accountIndex = userOptions.currentAccountIndex
-      }
-      wallet = wallet.deriveChild(accountIndex)
+     
+      
       spinner.success()
     }
   }

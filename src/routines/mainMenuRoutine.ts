@@ -16,6 +16,7 @@ import { UserOptionsState } from "../lib/UserOptionsState.js";
 import { writeStandardUserOptionsState } from "../utils/writeStandardUserOptions.js";
 import { loadUserOptionsState } from "../utils/loadUserOptionsState.js";
 import { switchAccountRoutine } from "./switchAccountRoutine.js";
+import { getAccount } from "../utils/getAccount.js";
 let provider: ethers.JsonRpcProvider 
 let chainsFile: ChainsFile 
 let userOptionsState: UserOptionsState 
@@ -27,18 +28,21 @@ export async function mainMenuRoutine() {
   if(!fs.existsSync(userOptionsFilePath)){
     await writeStandardUserOptionsState()
   }
+  let accountIndex = 0;
+ 
   //chainsFile = await loadChainsFile();
   [chainsFile,userOptionsState] = await Promise.all([loadChainsFile(),loadUserOptionsState()])
+  accountIndex = userOptionsState.currentAccountIndex
   provider = new ethers.JsonRpcProvider(
     chainsFile.chainsById[userOptionsState.chainId].rpcUrl
   );
 
-  const balance = await provider.getBalance(wallet?.address!);
+  const balance = await provider.getBalance(getAccount(wallet!,accountIndex).address);
   spinner.success()
   printWalletMainMenu({
     balance: ethers.formatEther(balance),
     connectedChain: chainsFile.chainsById[userOptionsState.chainId].name,
-    currentAddress: wallet?.address!,
+    currentAddress: getAccount(wallet!,accountIndex).address,
     nativeCurrency:
       chainsFile.chainsById[userOptionsState.chainId].nativeCurrency
         .symbol,
