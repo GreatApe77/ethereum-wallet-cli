@@ -1,32 +1,33 @@
-import { userOptionsFilePath } from "../constants/paths.js";
+import { userOptionsFilePath, walletDataDir } from "../constants/paths.js";
 import { standardChains } from "../constants/standardChains.js";
 import { ChainId } from "../types/ChainId.js";
 import { writeStandardChains } from "../utils/writeStandardChains.js";
 import { Chain } from "./Chain.js";
 import { ChainsFile } from "./ChainsFile.js";
-import fsp from "node:fs/promises"
+
 import fs from "node:fs"
 export class UserOptionsState{
     public chainId:ChainId
     public currentAccountIndex:number
     public chains:ChainsFile 
     constructor(){
-        if(!fs.existsSync(userOptionsFilePath)){
-            async ()=>await UserOptionsState.writeStandardOptions()
-            
+        if(!fs.existsSync(walletDataDir)){
+            fs.mkdirSync(walletDataDir)
         }
+        UserOptionsState.writeStandardOptions()
         let file = fs.readFileSync(userOptionsFilePath,"utf-8")
         let jsonParsed = JSON.parse(file)
         this.chainId = jsonParsed.chainId
         this.currentAccountIndex = jsonParsed.currentAccountIndex
         this.chains = jsonParsed.chains
+        
 
     
     }
-    public async  saveCurrentInformation(){
-        await fsp.writeFile(userOptionsFilePath,JSON.stringify(this,null,2))
+    public  saveCurrentInformation(){
+        fs.writeFileSync(userOptionsFilePath,JSON.stringify(this,null,2))
     }
-    public static async  writeStandardOptions():Promise<void>{
+    public static   writeStandardOptions(){
         const sepolia = new Chain({
             name:standardChains.sepolia.name,
             chainId:standardChains.sepolia.id,
@@ -60,6 +61,11 @@ export class UserOptionsState{
             currentAccountIndex:0,
             chains:chainsFile
        } as UserOptionsState
-       await fsp.writeFile(userOptionsFilePath,JSON.stringify(userOptions,null,2))
+        fs.writeFileSync(userOptionsFilePath,JSON.stringify(userOptions,null,2))
+    }
+    public static loadConfig():UserOptionsState{
+        let file = fs.readFileSync(userOptionsFilePath,"utf-8")
+        let jsonParsed = JSON.parse(file)
+        return jsonParsed as UserOptionsState
     }
 }

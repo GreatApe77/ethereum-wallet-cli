@@ -4,9 +4,6 @@ import { UserOptionsState } from "../lib/UserOptionsState.js"
 import { standardChains } from "../constants/standardChains.js"
 
 export async function writeStandardUserOptionsState(){
-    const standardOptions = new UserOptionsState({
-        chainId:standardChains.sepolia.id,
-        currentAccountIndex:0
-    })
+    const standardOptions = new UserOptionsState()
     await fs.writeFile(userOptionsFilePath,JSON.stringify(standardOptions,null,2))
 }
