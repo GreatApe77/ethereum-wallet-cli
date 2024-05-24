@@ -58,10 +58,33 @@ export class UserOptionsState{
             nativeCurrency:standardChains.mainnet.nativeCurrency,
             rpcUrl:standardChains.mainnet.rpcUrls.default.http[0]
         })
+        const localhost = "http://localhost:8545"
+        const ganache = new Chain({
+            name:"Ganache (Localhost)",
+            chainId:1337,
+            nativeCurrency:{
+                decimals:18,
+                name:"Ethereum",
+                symbol:"ETH"
+            },
+            rpcUrl:localhost
+        })
+        const anvil = new Chain({
+            name:"Anvil (Localhost)",
+            chainId:31337,
+            nativeCurrency:{
+                decimals:18,
+                name:"Ethereum",
+                symbol:"ETH"
+            },
+            rpcUrl:localhost
+        })
         const chains:Record<number,Chain> = {
             [sepolia.chainId]:sepolia,
             [fantomTestnet.chainId]:fantomTestnet,
-            [ethereumMainnet.chainId]:ethereumMainnet
+            [ethereumMainnet.chainId]:ethereumMainnet,
+            [31337]:anvil,
+            1337:ganache
         }
         const chainsFile = new ChainsFile({
             
