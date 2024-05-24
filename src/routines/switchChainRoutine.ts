@@ -1,5 +1,6 @@
 import { getUserOptionsState } from "../constants/userOptionsStateSingleton.js";
 import { printSwitchChainMenu } from "../printing/switch-chain/printSwitchChainMenu.js";
+import { promptSwitchChainAvaiableOptions } from "../prompts/switch-chain/promptSwitchChain.js";
 
 export async function swithChainsRoutine() {
   //print switch chain menu that should contain current chain information
@@ -14,5 +15,6 @@ export async function swithChainsRoutine() {
     rpcUrl:currentChain.rpcUrl,
     symbol:currentChain.nativeCurrency.symbol
   });
-  
+  const answer = await promptSwitchChainAvaiableOptions()
+  console.log(answer)
 }

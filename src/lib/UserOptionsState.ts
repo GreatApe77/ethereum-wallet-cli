@@ -27,6 +27,11 @@ export class UserOptionsState{
     public getCurrentChain(){
         return this.chains.chainsById[this.chainId]
     }
+    public getAvaiableChains(){
+        return Object.keys(this.chains.chainsById).map((chainId)=>{
+            return this.chains.chainsById[Number(chainId)]
+        })
+    }
     public  saveCurrentInformation(){
         fs.writeFileSync(userOptionsFilePath,JSON.stringify(this,null,2))
     }
