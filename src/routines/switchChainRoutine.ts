@@ -1,6 +1,9 @@
+import { actionFeedback } from "../components/actionFeedback.js";
 import { getUserOptionsState } from "../constants/userOptionsStateSingleton.js";
 import { printSwitchChainMenu } from "../printing/switch-chain/printSwitchChainMenu.js";
 import { promptSwitchChainAvaiableOptions } from "../prompts/switch-chain/promptSwitchChain.js";
+import { spinner } from "../utils/spinner.js";
+import { mainMenuRoutine } from "./mainMenuRoutine.js";
 
 export async function swithChainsRoutine() {
   //print switch chain menu that should contain current chain information
@@ -16,5 +19,15 @@ export async function swithChainsRoutine() {
     symbol:currentChain.nativeCurrency.symbol
   });
   const answer = await promptSwitchChainAvaiableOptions()
-  console.log(answer)
+  if(answer===-1){
+    await mainMenuRoutine()
+  }else{
+    spinner.start()
+    userOptionsState.chainId = answer
+    userOptionsState.saveCurrentInformation()
+    spinner.success()
+    actionFeedback("Chain Changed","success")
+    await swithChainsRoutine()
+  }
+  
 }

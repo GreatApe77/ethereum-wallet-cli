@@ -14,7 +14,10 @@ export class UserOptionsState{
         if(!fs.existsSync(walletDataDir)){
             fs.mkdirSync(walletDataDir)
         }
-        UserOptionsState.writeStandardOptions()
+        if(!fs.existsSync(userOptionsFilePath)){
+            UserOptionsState.writeStandardOptions()
+
+        }
         let file = fs.readFileSync(userOptionsFilePath,"utf-8")
         let jsonParsed = JSON.parse(file)
         this.chainId = jsonParsed.chainId
