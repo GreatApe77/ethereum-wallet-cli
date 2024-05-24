@@ -1,11 +1,12 @@
 import { menuTitle } from "../../components/menuTitle.js";
 import { printLineSpace } from "../../utils/printLineSpace.js";
+import { printMarginLeft } from "../../utils/printMarginLeft.js";
 
 export function printSwitchAccountMenu(accountConnected: string){
 
     menuTitle("Switch Account")
     printLineSpace()
-    console.log(`Current Address: ${accountConnected}`)
+    printMarginLeft(`Current Address: ${accountConnected}`)
     printLineSpace()
 
     /*     const switchAccountMenuTemplate = `

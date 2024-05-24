@@ -2,7 +2,7 @@ import inquirer from "inquirer";
 
 export enum MainMenuOptions{
     SWITCH_ACCOUNT,
-    OPTION_2,
+    SWITCH_CHAIN,
     OPTION_3
 }
 export async function promptMainMenuOptions(){
@@ -12,12 +12,12 @@ export async function promptMainMenuOptions(){
         message:"Select one of the following options:",
         choices:[
             {
-                name:"Switch account",
+                name:"Switch Account",
                 value:MainMenuOptions.SWITCH_ACCOUNT
             },
             {
-                name:"OPTION 2",
-                value:MainMenuOptions.OPTION_2
+                name:"Switch Chain",
+                value:MainMenuOptions.SWITCH_CHAIN
             },
             {
                 name:"OPTION 3",

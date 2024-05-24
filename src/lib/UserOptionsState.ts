@@ -24,6 +24,9 @@ export class UserOptionsState{
 
     
     }
+    public getCurrentChain(){
+        return this.chains.chainsById[this.chainId]
+    }
     public  saveCurrentInformation(){
         fs.writeFileSync(userOptionsFilePath,JSON.stringify(this,null,2))
     }
@@ -68,4 +71,5 @@ export class UserOptionsState{
         let jsonParsed = JSON.parse(file)
         return jsonParsed as UserOptionsState
     }
+    
 }
