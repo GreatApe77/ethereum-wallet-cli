@@ -12,6 +12,7 @@ import { getUserOptionsState } from "../constants/userOptionsStateSingleton.js";
 import { switchAccountRoutine } from "./switchAccountRoutine.js";
 import { getAccount } from "../utils/getAccount.js";
 import { swithChainsRoutine } from "./switchChainRoutine.js";
+import { addChainRoutine } from "./addChainRoutine.js";
 let provider: ethers.JsonRpcProvider;
 
 export async function mainMenuRoutine() {
@@ -49,8 +50,8 @@ export async function mainMenuRoutine() {
     case MainMenuOptions.SWITCH_CHAIN:
       await swithChainsRoutine()
       break;
-    case MainMenuOptions.OPTION_3:
-      console.log("Option 3 selected");
+    case MainMenuOptions.ADD_CHAIN:
+      await addChainRoutine()
       break;
     default:
       break;

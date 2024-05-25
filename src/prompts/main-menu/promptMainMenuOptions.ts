@@ -3,7 +3,7 @@ import inquirer from "inquirer";
 export enum MainMenuOptions{
     SWITCH_ACCOUNT,
     SWITCH_CHAIN,
-    OPTION_3
+    ADD_CHAIN
 }
 export async function promptMainMenuOptions(){
     const res = await inquirer.prompt({
@@ -20,8 +20,8 @@ export async function promptMainMenuOptions(){
                 value:MainMenuOptions.SWITCH_CHAIN
             },
             {
-                name:"OPTION 3",
-                value:MainMenuOptions.OPTION_3
+                name:"Add Custom Network",
+                value:MainMenuOptions.ADD_CHAIN
             }
         ]
     })
