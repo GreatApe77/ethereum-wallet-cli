@@ -35,6 +35,28 @@ export class UserOptionsState{
             return this.chains.chainsById[Number(chainId)]
         })
     }
+    public addChain(chainParams:Pick<Chain,"chainId"|"name"|"rpcUrl"> & {symbol:string}){
+        if(this.chainExists(chainParams.chainId)) throw new Error("Chain Already Registered")
+        const newChain = new Chain({
+            chainId:chainParams.chainId,
+            name:chainParams.name,
+            nativeCurrency:{
+                decimals:18,
+                name:"Currency Name",
+                symbol:chainParams.symbol
+            },
+            rpcUrl:chainParams.rpcUrl
+        })
+        this.chains.chainsById[chainParams.chainId] = newChain
+        
+    }
+    public getChain(chainId:number){
+        
+        return this.chains.chainsById[chainId]
+    }
+    public chainExists(chainId:number){
+        return Boolean(this.chains.chainsById[chainId])
+    }
     public  saveCurrentInformation(){
         fs.writeFileSync(userOptionsFilePath,JSON.stringify(this,null,2))
     }

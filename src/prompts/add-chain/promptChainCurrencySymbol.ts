@@ -9,7 +9,7 @@ export async function promptChainCurrency(){
             type:"input",
             name:"chainSymbol",
 
-            message:"Symbol (ex: ETH): ",
+            message:"Symbol (ex: ETH):",
             
         })
         return res.chainSymbol as string

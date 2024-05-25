@@ -12,7 +12,7 @@ export async function promptRpcUrl(){
                 if(!userInput.startsWith("http")) return "Must be a valid http URL"
                 return true
             },
-            message:"The RPC URL for the Network : ",
+            message:"The RPC URL for the Network:",
             
         })
         return res.rpcUrl as string

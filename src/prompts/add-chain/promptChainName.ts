@@ -8,7 +8,7 @@ export async function promptChainName(){
         const res = await inquirer.prompt({
             type:"input",
             name:"chainName",
-            message:"Network name: ",
+            message:"Network name:",
             validate:(input:string)=>{
                 if(input.length===0) return "Required Field"
                 return true
