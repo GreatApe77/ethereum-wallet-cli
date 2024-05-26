@@ -10,10 +10,12 @@ export class Chain{
     public nativeCurrency:NativeCurrency
     public chainId:number
     public rpcUrl:string
+    public blockExplorerUrl?:string | undefined
     constructor(props:Chain){
         this.name = props.name
         this.nativeCurrency = props.nativeCurrency
         this.chainId = props.chainId
         this.rpcUrl = props.rpcUrl
+        this.blockExplorerUrl = this.blockExplorerUrl
     }
 }

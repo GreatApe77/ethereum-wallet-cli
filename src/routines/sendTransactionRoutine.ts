@@ -11,6 +11,10 @@ import { printReviewTransaction } from "../printing/send-transaction/printReview
 import { mainMenuRoutine } from "./mainMenuRoutine.js";
 import { TransactionRequest } from "ethers";
 import { TransactionResponse } from "ethers";
+import { printTransactionExplorerLink } from "../printing/send-transaction/printTransactionExplorerLink.js";
+import { printTransactionHash } from "../printing/send-transaction/printTransactionHash.js";
+import { sleep } from "../utils/sleep.js";
+import { spinner } from "../utils/spinner.js";
 
 export async function sendTransactionRoutine() {
   //print transaction menu with the current account chain name and balance
@@ -36,10 +40,12 @@ export async function sendTransactionRoutine() {
   const targetAddress = await promptTargetAddress()
   if(targetAddress==-1) {
     actionFeedback("Transaction Cancelled", "info")
+    await mainMenuRoutine()
   }
   const targetValue = await promptTargetValue(balance)
   if(targetValue==-1) {
     actionFeedback("Transaction Cancelled", "info")
+    await mainMenuRoutine()
   }
 
   printReviewTransaction({
@@ -62,17 +68,32 @@ export async function sendTransactionRoutine() {
 
   }
   let transactionResponse:TransactionResponse
+  spinner.start()
   try {
     await account.connect(provider).estimateGas(transaction)
   } catch (error) {
+    spinner.error()
       actionFeedback("This transaction might fail","error")
       await sendTransactionRoutine()
   }
+  spinner.success()
+  spinner.start()
   try {
     transactionResponse = await account.connect(provider).sendTransaction(transaction)
 
-    await transactionResponse.wait()
   } catch (error) {
+    spinner.error()
     actionFeedback("Transaction Failed","error")
+    await sendTransactionRoutine()
   }
+  spinner.success()
+  printTransactionHash(transactionResponse!.hash)
+  const explorerUrl = userOptionsState.getCurrentChain().blockExplorerUrl
+  if(explorerUrl){
+      printTransactionExplorerLink(explorerUrl,transactionResponse!.hash)
+  }
+  actionFeedback("Transaction Successfully Sent !","success")
+  await sleep(3)
+  await mainMenuRoutine()
+  
 }

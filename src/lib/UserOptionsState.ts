@@ -65,20 +65,23 @@ export class UserOptionsState{
             name:standardChains.sepolia.name,
             chainId:standardChains.sepolia.id,
             nativeCurrency:standardChains.sepolia.nativeCurrency,
-            rpcUrl:standardChains.sepolia.rpcUrls.default.http[0]
+            rpcUrl:standardChains.sepolia.rpcUrls.default.http[0],
+            blockExplorerUrl:standardChains.sepolia.blockExplorers.default.url
     
         })
         const fantomTestnet = new Chain({
             name:standardChains.fantomTestnet.name,
             chainId:standardChains.fantomTestnet.id,
             nativeCurrency:standardChains.fantomTestnet.nativeCurrency,
-            rpcUrl:standardChains.fantomTestnet.rpcUrls.default.http[0]
+            rpcUrl:standardChains.fantomTestnet.rpcUrls.default.http[0],
+            blockExplorerUrl:standardChains.fantomTestnet.blockExplorers.default.url
         })
         const ethereumMainnet = new Chain({
             name:standardChains.mainnet.name,
             chainId:standardChains.mainnet.id,
             nativeCurrency:standardChains.mainnet.nativeCurrency,
-            rpcUrl:standardChains.mainnet.rpcUrls.default.http[0]
+            rpcUrl:standardChains.mainnet.rpcUrls.default.http[0],
+            blockExplorerUrl:standardChains.mainnet.blockExplorers.default.url
         })
         const localhost = "http://localhost:8545"
         const ganache = new Chain({
