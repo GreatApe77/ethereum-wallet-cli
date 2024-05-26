@@ -13,6 +13,7 @@ import { switchAccountRoutine } from "./switchAccountRoutine.js";
 import { getAccount } from "../utils/getAccount.js";
 import { swithChainsRoutine } from "./switchChainRoutine.js";
 import { addChainRoutine } from "./addChainRoutine.js";
+import { sendTransactionRoutine } from "./sendTransactionRoutine.js";
 let provider: ethers.JsonRpcProvider;
 
 export async function mainMenuRoutine() {
@@ -48,10 +49,13 @@ export async function mainMenuRoutine() {
       await switchAccountRoutine();
       break;
     case MainMenuOptions.SWITCH_CHAIN:
-      await swithChainsRoutine()
+      await swithChainsRoutine();
       break;
     case MainMenuOptions.ADD_CHAIN:
-      await addChainRoutine()
+      await addChainRoutine();
+      break;
+    case MainMenuOptions.SEND_TRANSACTION:
+      await sendTransactionRoutine()
       break;
     default:
       break;
