@@ -83,7 +83,8 @@ export class UserOptionsState{
             rpcUrl:standardChains.mainnet.rpcUrls.default.http[0],
             blockExplorerUrl:standardChains.mainnet.blockExplorers.default.url
         })
-        const localhost = "http://localhost:8545"
+
+        const localhost = process.env.NODE_ENV==="dev"? "http://anvil:8545":"http://localhost:8545"
         const ganache = new Chain({
             name:"Ganache (Localhost)",
             chainId:1337,
