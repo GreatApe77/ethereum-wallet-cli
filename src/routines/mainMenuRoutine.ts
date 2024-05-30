@@ -25,19 +25,31 @@ export async function mainMenuRoutine() {
   //[chainsFile,userOptionsState] = await Promise.all([loadChainsFile(),loadUserOptionsState()])
   //accountIndex = userOptionsState.currentAccountIndex
   provider = new ethers.JsonRpcProvider(
-    userOptionsState.chains.chainsById[userOptionsState.chainId].rpcUrl
+    userOptionsState.chains.chainsById[userOptionsState.chainId].rpcUrl,undefined,{staticNetwork:true}
   );
+  let balance:bigint = BigInt(0)
+  let fetchError:boolean = false 
+  try {
+    const network = await provider._detectNetwork()
+    if(network.matches(userOptionsState.chainId)){
 
-  const balance = await provider.getBalance(
-    getAccount(wallet!, userOptionsState.currentAccountIndex).address
-  );
+      balance = await provider.getBalance(
+        getAccount(wallet!, userOptionsState.currentAccountIndex).address
+      );
+
+    }
+    
+  } catch (error) {
+    provider.destroy()
+    fetchError = true
+  }
   spinner.success();
   printWalletMainMenu({
-    balance: ethers.formatEther(balance),
+    balance: fetchError? "(Error fetching balance!)":ethers.formatEther(balance),
     connectedChain:
-      userOptionsState.chains.chainsById[userOptionsState.chainId].name,
+    userOptionsState.chains.chainsById[userOptionsState.chainId].name,
     currentAddress: getAccount(wallet!, userOptionsState.currentAccountIndex)
-      .address,
+    .address,
     nativeCurrency:
       userOptionsState.chains.chainsById[userOptionsState.chainId]
         .nativeCurrency.symbol,
