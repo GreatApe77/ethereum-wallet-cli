@@ -1,5 +1,15 @@
 import path from "node:path";
-export const walletDataPath = path.resolve("wallet-data", "wallet.json");
-export const walletDataDir = path.resolve("wallet-data");
-export const savedChainsPath = path.resolve("wallet-data", "chains.json");
-export const userOptionsFilePath = path.resolve("wallet-data", "options.json");
+import fs from "node:fs";
+import { getRootDir } from "../utils/pathUtils.js";
+
+const rootDir = getRootDir();
+const dataDir = path.resolve(rootDir, "wallet-data");
+
+if (!fs.existsSync(dataDir)) {
+	fs.mkdirSync(dataDir, { recursive: true });
+}
+
+export const walletDataPath = path.join(dataDir, "wallet.json");
+export const savedChainsPath = path.join(dataDir, "chains.json");
+export const userOptionsFilePath = path.join(dataDir, "options.json");
+export const walletDataDir = dataDir;
