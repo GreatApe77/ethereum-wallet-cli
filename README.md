@@ -23,6 +23,8 @@
 ![GitHub Actions](https://img.shields.io/badge/github%20actions-%232671E5.svg?style=for-the-badge&logo=githubactions&logoColor=white)
 ![Ethereum](https://img.shields.io/badge/Ethereum-3C3C3D?style=for-the-badge&logo=Ethereum&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+![NPM](https://img.shields.io/badge/NPM-%23CB3837.svg?style=for-the-badge&logo=npm&logoColor=white)
 
 </p>
 
@@ -36,7 +38,7 @@
   <h3 align="center">Termiwallet</h3>
 
   <p align="center">
-    A simple terminal wallet for managing your finances.
+    A simple terminal cripto wallet for managing your finances.
     <br />
    
     
@@ -45,27 +47,29 @@
 
 <!-- TABLE OF CONTENTS -->
 
-
 <details>
-    <summary>Table of Contents</summary>
-    <ol>
-        <li>
-        <a href="#about-the-project">About The Project</a>
-        </li>
-        <li>
-        <a href="#built-with">Built With</a>
-        </li>
-        <li>
-        <a href="#getting-started-from-source-code">Getting Started From Source Code</a>
-        </li>
-        <li>
-        <a href="#getting-started-docker">Getting Started (Docker)</a>
-        </li>
-        <li>
-        <a href="#license">License</a>
-        </li>
-    </ol>
 
+<summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+    </li>
+    <li>
+      <a href="#built-with">Built With</a>
+    </li>
+    <li>
+      <a href="#getting-started-npm-package">Getting Started (NPM Package)</a>
+    </li>
+    <li>
+      <a href="#getting-started-source-code">Getting Started (Source Code)</a>
+    </li>
+    <li>
+      <a href="#getting-started-docker">Getting Started (Docker)</a>
+    </li>
+    <li>
+      <a href="#license">License</a>
+    </li>
+  </ol>
 </details>
 
 <!-- ABOUT THE PROJECT -->
@@ -78,11 +82,7 @@ This is a simple terminal wallet for managing your finances. Its functionality i
     <img src="assets/menu.png" alt="Logo" width="100%">
 </div>
 
-
-
 ### Built With
-
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
 
 <!-- * [![JQuery][JQuery.com]][JQuery-url]-->
 
@@ -93,38 +93,65 @@ This section should list any major frameworks/libraries used to bootstrap your p
 - [Chalk](https://www.npmjs.com/package/chalk)
 - [Figlet](https://www.npmjs.com/package/figlet)
 
-
-
 <!-- GETTING STARTED -->
 
-## Getting Started From Source Code
+## Getting Started (NPM Package)
+
+You can install the package globally and run it from the terminal
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/en/)
+- [NPM](https://www.npmjs.com/)
+
+### Installation
+
+1.  Install the package globally
+
+    ```sh
+    npm install -g @great_ape77/ethereum-wallet-cli
+    ```
+
+2.  Run the wallet
+
+    ```sh
+    termiwallet
+    ```
+
+## Getting Started (Source Code)
 
 To get started with this project, you can clone the repository and run the project locally
 
 ### Prerequisites
 
-You need to have Node.js and NPM installed on your machine to run this project. You can download it from [here](https://nodejs.org/en/)
+- [Node.js](https://nodejs.org/en/)
+- [NPM](https://www.npmjs.com/)
 
 ### Installation
 
 1.  Clone the repo
 
     ```sh
-    git clone
+    git clone https://github.com/GreatApe77/ethereum-wallet-cli
     ```
 
-2.  Install NPM packages
+2.  Change directory to the project folder
+
+    ```sh
+    cd ethereum-wallet-cli
+    ```
+
+3.  Install NPM packages
 
     ```sh
     npm install
     ```
 
-3.  Run the project
+4.  Run the project
 
-        ```sh
-        npm run dev
-        ```
-
+    ```sh
+    npm run dev
+    ```
 
 ## Getting Started (Docker)
 
@@ -144,8 +171,6 @@ You will run the docker image in interactive mode to interact with the wallet
    docker run -it ghcr.io/greatape77/ethereum-wallet-cli:latest
    ```
 
-
-
 ## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
@@ -154,4 +179,3 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 -->
-
