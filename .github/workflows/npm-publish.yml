@@ -31,8 +31,6 @@ jobs:
         run: npm ci
       - name: Build package
         run: npm run build
-      - name: Set NPM access to public
-        run: npm config set access public
       - name: Publish to NPM
         run: npm publish --access=public
         env:
