@@ -4,7 +4,9 @@
   "description": "A ethereum wallet built for the terminal",
   "type": "module",
   "main": "dist/index.js",
-  "bin": "dist/index.js",
+  "bin": {
+    "termiwallet": "dist/index.js"
+  },
   "engines": {
     "node": ">=20.0.0"
   },
