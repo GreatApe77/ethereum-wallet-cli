@@ -1,6 +1,6 @@
 {
 	"name": "@great_ape77/ethereum-wallet-cli",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "A ethereum wallet built for the terminal",
 	"type": "module",
 	"main": "dist/index.js",
@@ -9,7 +9,7 @@
 	},
 	
 	"engines": {
-		"node": ">=20.0.0"
+		"node": ">=18.0.0"
 	},
 	"repository": {
 		"type": "git",
