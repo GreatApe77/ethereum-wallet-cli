@@ -1,4 +1,4 @@
-
+#!/usr/bin/env node
 import inquirer from "inquirer"
 import { walletAuthRoutine } from "./routines/walletAuthRoutine.js";
 import { mainMenuRoutine } from "./routines/mainMenuRoutine.js";
