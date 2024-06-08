@@ -3,6 +3,15 @@
   "version": "1.0.0",
   "description": "A ethereum wallet CLI for learning purposes",
   "type": "module",
+  "main": "dist/index.js",
+  "bin": "dist/index.js",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GreatApe77/ethereum-wallet-cli.git"
+  },
   "directories": {
     "doc": "docs"
   },
@@ -14,7 +23,7 @@
     "build": "npx tsc",
     "start": "node ./dist/index.js"
   },
-  "keywords": [],
+  "keywords": ["ethereum","wallet","cli","typescript","nodejs","ethers","terminal"],
   "author": "Mateus Navarro",
   "license": "MIT",
   "devDependencies": {
