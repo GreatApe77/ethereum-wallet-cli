@@ -5,7 +5,7 @@
 	"type": "module",
 	"main": "dist/index.js",
 	"bin": "dist/index.js",
-	"private": "false",
+	
 	"engines": {
 		"node": ">=20.0.0"
 	},
