@@ -14,6 +14,7 @@ import { getAccount } from "../utils/getAccount.js";
 import { swithChainsRoutine } from "./switchChainRoutine.js";
 import { addChainRoutine } from "./addChainRoutine.js";
 import { sendTransactionRoutine } from "./sendTransactionRoutine.js";
+import { erc20TokensMenuRoutine } from "./erc20TokensMenuRoutine.js";
 let provider: ethers.JsonRpcProvider;
 
 export async function mainMenuRoutine() {
@@ -69,6 +70,8 @@ export async function mainMenuRoutine() {
     case MainMenuOptions.SEND_TRANSACTION:
       await sendTransactionRoutine()
       break;
+    case MainMenuOptions.NAVIGATE_TO_ERC20TOKENS_MENU:
+      await erc20TokensMenuRoutine()
     default:
       break;
   }

@@ -5,6 +5,7 @@ export enum MainMenuOptions {
   SWITCH_CHAIN,
   ADD_CHAIN,
   SEND_TRANSACTION,
+  NAVIGATE_TO_ERC20TOKENS_MENU
 }
 export async function promptMainMenuOptions() {
   const res = await inquirer.prompt({
@@ -28,6 +29,10 @@ export async function promptMainMenuOptions() {
         name:"Send Transaction",
         value:MainMenuOptions.SEND_TRANSACTION
       },
+      {
+        name:"Tokens",
+        value:MainMenuOptions.NAVIGATE_TO_ERC20TOKENS_MENU
+      }
     ],
   });
   return res.choice as MainMenuOptions;
