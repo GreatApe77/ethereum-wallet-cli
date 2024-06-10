@@ -12,4 +12,5 @@ if (!fs.existsSync(dataDir)) {
 export const walletDataPath = path.join(dataDir, "wallet.json");
 export const savedChainsPath = path.join(dataDir, "chains.json");
 export const userOptionsFilePath = path.join(dataDir, "options.json");
+export const erc20tokensFilePath = path.join(dataDir, "erc20tokens.json")
 export const walletDataDir = dataDir;
