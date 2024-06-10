@@ -1,6 +1,6 @@
-import { IERC20Token } from "../../models/interfaces/IERC20Token.js";
-import { IERC20TokenRepository } from "../interfaces/IERC20TokenRepository.js";
-import { erc20tokensFilePath } from "../../constants/paths.js";
+import { IERC20Token } from "../../../models/interfaces/IERC20Token.js";
+import { IERC20TokenRepository } from "../../interfaces/IERC20TokenRepository.js";
+import { erc20tokensFilePath } from "../../../constants/paths.js";
 import fs from "fs/promises"
 export class ERC20TokenRepository implements IERC20TokenRepository{
     
