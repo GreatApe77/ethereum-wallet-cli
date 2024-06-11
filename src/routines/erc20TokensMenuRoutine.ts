@@ -15,6 +15,7 @@ import { mainMenuRoutine } from "./mainMenuRoutine.js";
 import { actionFeedback } from "../components/actionFeedback.js";
 import { importTokenRoutine } from "./importTokenRoutine.js";
 import { deleteTokenRoutine } from "./deleteTokenRoutine.js";
+import { transferErc20fundsRoutine } from "./transferErc20fundsRoutine.js";
 
 
 export async function erc20TokensMenuRoutine() {
@@ -38,6 +39,7 @@ export async function erc20TokensMenuRoutine() {
     }));
     
     const result = await balances
+    let balancesResolved:bigint[] = new Array(result.length)
     spinner.success()
     menuTitle("TOKENS (ERC20)");
     if(tokens.length === 0){
@@ -50,6 +52,7 @@ export async function erc20TokensMenuRoutine() {
     tokens.forEach((token,index)=>{
         //@ts-ignore
         const promiseResult = result[index].status === "fulfilled" ? result[index].value : "ERROR"
+        balancesResolved[index] = promiseResult
         printTokenInfo({balance:ethers.formatUnits(promiseResult,token.decimals),symbol:token.symbol})
     })
     printLineSpace()
@@ -71,7 +74,7 @@ export async function erc20TokensMenuRoutine() {
             await deleteTokenRoutine()
             break;
         case TokenMenuOperations.TRANSFER_TOKEN:
-            //transfer token
+            await transferErc20fundsRoutine(balancesResolved,tokens)
             break;
     }
 }

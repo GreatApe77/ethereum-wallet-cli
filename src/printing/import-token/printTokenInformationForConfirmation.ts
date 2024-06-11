@@ -2,7 +2,7 @@ import chalk from "chalk";
 import { printLineSpace } from "../../utils/printLineSpace.js";
 import { printMarginLeft } from "../../utils/printMarginLeft.js";
 
-export function printTokenInformationForConfirmation(tokenAddress:string,symbol:string, decimals:number) {
+export function printTokenInformation(tokenAddress:string,symbol:string, decimals:number) {
     printLineSpace();
     printMarginLeft(chalk.bold.blueBright("Token Information:"));
     printLineSpace();

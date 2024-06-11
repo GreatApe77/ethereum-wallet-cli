@@ -9,7 +9,7 @@ import { actionFeedback } from "../components/actionFeedback.js";
 import { spinner } from "../utils/spinner.js";
 import { promptTokenImportConfirmation } from "../prompts/import-token/promptoTokenImportConfirmation.js";
 import { ethers } from "ethers";
-import { printTokenInformationForConfirmation } from "../printing/import-token/printTokenInformationForConfirmation.js";
+import { printTokenInformation } from "../printing/import-token/printTokenInformationForConfirmation.js";
 import { getErc20TokenRepository } from "../repositories/implementations/erc20-token-repository/singleton.js";
 export async function importTokenRoutine() {
   menuTitle("Import a Token");
@@ -46,7 +46,7 @@ export async function importTokenRoutine() {
     await importTokenRoutine();
   }
   let numberDecimals = Number(decimals);
-  printTokenInformationForConfirmation(tokenAddress as string, symbol,numberDecimals );
+  printTokenInformation(tokenAddress as string, symbol,numberDecimals );
   const confirmation = await promptTokenImportConfirmation();
   if (confirmation) {
     spinner.start();
