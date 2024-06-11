@@ -14,6 +14,7 @@ import { TokenMenuOperations, promptOperations } from "../prompts/tokens-menu/pr
 import { mainMenuRoutine } from "./mainMenuRoutine.js";
 import { actionFeedback } from "../components/actionFeedback.js";
 import { importTokenRoutine } from "./importTokenRoutine.js";
+import { deleteTokenRoutine } from "./deleteTokenRoutine.js";
 
 
 export async function erc20TokensMenuRoutine() {
@@ -67,7 +68,7 @@ export async function erc20TokensMenuRoutine() {
             await importTokenRoutine()
             break;
         case TokenMenuOperations.DELETE_TOKEN:
-            //delete token
+            await deleteTokenRoutine()
             break;
         case TokenMenuOperations.TRANSFER_TOKEN:
             //transfer token

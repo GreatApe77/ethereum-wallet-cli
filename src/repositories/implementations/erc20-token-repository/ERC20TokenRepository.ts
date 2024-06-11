@@ -4,6 +4,7 @@ import { erc20tokensFilePath } from "../../../constants/paths.js";
 import fs from "fs/promises"
 export class ERC20TokenRepository implements IERC20TokenRepository{
     
+    
     private async readTokensFile(): Promise<IERC20Token[]> {
         try {
             const data = await fs.readFile(erc20tokensFilePath, 'utf-8');
