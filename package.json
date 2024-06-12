@@ -1,6 +1,6 @@
 {
 	"name": "@great_ape77/ethereum-wallet-cli",
-	"version": "1.0.3",
+	"version": "1.1.0",
 	"description": "A ethereum wallet built for the terminal",
 	"type": "module",
 	"main": "dist/index.js",
