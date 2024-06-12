@@ -12,7 +12,6 @@ import {
 import { printLineSpace } from "../utils/printLineSpace.js";
 import { printMarginLeft } from "../utils/printMarginLeft.js";
 import { erc20TokensMenuRoutine } from "./erc20TokensMenuRoutine.js";
-import { transferErc20fundsRoutine } from "./transferErc20fundsRoutine.js";
 import { wallet } from "./walletAuthRoutine.js";
 import chalk from "chalk";
 import { promptConfirmation } from "../prompts/transfer-erc20-funds/promptConfirmation.js";
@@ -71,14 +70,18 @@ export async function executeTokenTransferRoutine(
         if(blockExplorerUrl){
             printTransactionExplorerLink(blockExplorerUrl,tx!.hash)
         }
+        actionFeedback(`Transfer ${ethers.formatUnits(amount,token.decimals)} ${token.symbol} Submited! Follow the transaction hash above!`, "success");
+        spinner.success();
       } catch (error) {
         console.log(error);
         spinner.error();
         actionFeedback("Error while transferring tokens", "error");
-        await erc20TokensMenuRoutine();
       }
 
       await erc20TokensMenuRoutine();
+    }else{
+        actionFeedback(`Transfer of ${token.symbol} cancelled`, "info");
+        await erc20TokensMenuRoutine();
     }
   }
 }
