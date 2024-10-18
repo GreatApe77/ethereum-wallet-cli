@@ -5,4 +5,5 @@ export interface Wallet{
     generateNew():void
     login(password:string,jsonWalletString:string):Promise<void>
     import(mnemonic:string):void
+    encryptWallet(password:string):Promise<string>
 }

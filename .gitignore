@@ -132,3 +132,5 @@ dist
 
 #Saved Files
 wallet-data
+database
+*.sqlite

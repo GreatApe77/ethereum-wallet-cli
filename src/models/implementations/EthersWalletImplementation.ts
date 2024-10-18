@@ -9,6 +9,9 @@ export class EthersWalletImplementation implements Wallet{
         
         this.ethersWallet = null
     }
+    public encryptWallet(password: string): Promise<string> {
+        return this.ethersWallet?.encrypt(password) as Promise<string>
+    }
     public static getInstance():Wallet{
         if(!EthersWalletImplementation.instance){
             EthersWalletImplementation.instance = new EthersWalletImplementation()
@@ -41,5 +44,6 @@ export class EthersWalletImplementation implements Wallet{
         this.ethersWallet = ethers.HDNodeWallet.createRandom(undefined,PARENT_PATH)
     }
     
+   
 
 }

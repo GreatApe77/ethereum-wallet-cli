@@ -20,7 +20,7 @@
 	},
 	"scripts": {
 		"dev": "npx tsx --watch src/index.ts",
-		"test": "npx vitest --config ./vitest.config.ts --run",
+		"test": "npx vitest --config ./vitest.config.ts --run --reporter=verbose",
 		"test:dev": "npx vitest --config ./vitest.config.ts",
 		"coverage": "npx vitest --coverage",
 		"build": "npx tsc",
