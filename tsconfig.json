@@ -13,5 +13,5 @@
     "declaration": true
                                     
   },
-  "exclude": ["__tests__","vitest.config.ts","node_modules","dist"]
+  "exclude": ["__tests__","vitest.config.ts","node_modules","dist","src/**/*.test.ts"]
 }

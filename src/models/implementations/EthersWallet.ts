@@ -2,8 +2,8 @@ import { ethers } from "ethers";
 import { Wallet } from "../Wallet.js";
 import { PARENT_PATH } from "../../shared/constants/PARENT_PATH.js";
 
-export class EthersWalletImplementation implements Wallet{
-    private  static instance:EthersWalletImplementation | null = null;
+export class EthersWallet implements Wallet{
+    private  static instance:EthersWallet | null = null;
     private ethersWallet: ethers.HDNodeWallet | null;
     private constructor() {
         
@@ -13,10 +13,10 @@ export class EthersWalletImplementation implements Wallet{
         return this.ethersWallet?.encrypt(password) as Promise<string>
     }
     public static getInstance():Wallet{
-        if(!EthersWalletImplementation.instance){
-            EthersWalletImplementation.instance = new EthersWalletImplementation()
+        if(!EthersWallet.instance){
+            EthersWallet.instance = new EthersWallet()
         }
-        return EthersWalletImplementation.instance
+        return EthersWallet.instance
     }
     public async login(password: string,jsonWalletString:string): Promise<void> {
         let tempWallet =( await ethers.Wallet.fromEncryptedJson(
