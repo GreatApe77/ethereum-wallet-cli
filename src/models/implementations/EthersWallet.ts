@@ -23,11 +23,13 @@ export class EthersWallet implements Wallet{
 			jsonWalletString,
 			password
 		)) as ethers.HDNodeWallet
+        
         this.ethersWallet = ethers.HDNodeWallet.fromPhrase(
             tempWallet.mnemonic?.phrase!,
             undefined,
             PARENT_PATH
         )
+        
     }
     public import(mnemonic: string): void {
         throw new Error("Method not implemented.");
