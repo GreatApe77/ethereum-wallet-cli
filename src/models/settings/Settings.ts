@@ -3,8 +3,3 @@ export interface Settings{
     connectedChainId:number,
     needsSeed:boolean
 }
-export interface SettingsPersistence{
-    save(settings:Settings):void
-    read():void
-    
-}
