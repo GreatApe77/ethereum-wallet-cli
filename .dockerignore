@@ -8,3 +8,4 @@ node_modules
 wallet-data
 __tests__
 dist
+database
