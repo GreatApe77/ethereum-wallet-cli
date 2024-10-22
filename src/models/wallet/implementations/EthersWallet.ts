@@ -8,6 +8,9 @@ export class EthersWallet implements Wallet {
 	private constructor() {
 		this.ethersWallet = null;
 	}
+	getAddress(accountIndex: number): string {
+		return this.ethersWallet?.deriveChild(accountIndex).address as string
+	}
 	public encryptWallet(password: string): Promise<string> {
 		return this.ethersWallet?.encrypt(password) as Promise<string>;
 	}
