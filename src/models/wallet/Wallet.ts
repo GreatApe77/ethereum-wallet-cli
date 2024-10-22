@@ -7,4 +7,5 @@ export interface Wallet{
     import(mnemonic:string):void
     encryptWallet(password:string):Promise<string>
     getAddress(accountIndex:number):string
+    getMnemonic():string
 }

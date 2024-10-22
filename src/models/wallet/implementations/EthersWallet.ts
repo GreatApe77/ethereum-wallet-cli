@@ -8,6 +8,9 @@ export class EthersWallet implements Wallet {
 	private constructor() {
 		this.ethersWallet = null;
 	}
+	getMnemonic(): string {
+		return this.ethersWallet?.mnemonic?.phrase as string
+	}
 	getAddress(accountIndex: number): string {
 		return this.ethersWallet?.deriveChild(accountIndex).address as string
 	}
