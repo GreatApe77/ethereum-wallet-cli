@@ -1,12 +1,19 @@
 import { ethers } from "ethers";
 import { Wallet } from "../Wallet.js";
 import { PARENT_PATH } from "../../../shared/constants/PARENT_PATH.js";
+import { WalletRepository } from "../repository/WalletRepository.js";
+import { WalletRepositorySqlite } from "../repository/implementations/WalletRepositorySqlite.js";
 
 export class EthersWallet implements Wallet {
 	private static instance: EthersWallet | null = null;
 	private ethersWallet: ethers.HDNodeWallet | null;
+	private walletRepository: WalletRepository = new WalletRepositorySqlite();
 	private constructor() {
 		this.ethersWallet = null;
+		
+	}
+	exists(): boolean {
+		throw new Error("Method not implemented.");
 	}
 	getMnemonic(): string {
 		return this.ethersWallet?.mnemonic?.phrase as string

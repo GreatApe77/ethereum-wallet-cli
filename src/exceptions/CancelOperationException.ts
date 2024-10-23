@@ -1,3 +1,3 @@
-export class CancelOperationExcepetion extends Error{
+export class CancelOperationException extends Error{
     
 }

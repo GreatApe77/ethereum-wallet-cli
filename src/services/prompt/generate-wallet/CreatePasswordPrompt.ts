@@ -1,6 +1,6 @@
 import inquirer from "inquirer";
 import { Prompt } from "../Prompt.js";
-import { CancelOperationExcepetion } from "../../../exceptions/CancelOperationException.js";
+import { CancelOperationException } from "../../../exceptions/CancelOperationException.js";
 import InterruptedPrompt from "inquirer-interrupted-prompt";
 
 export class CreatePasswordPrompt implements Prompt<{password:string}>{
@@ -18,7 +18,7 @@ export class CreatePasswordPrompt implements Prompt<{password:string}>{
             }
         } catch (error) {
             if(error==InterruptedPrompt.EVENT_INTERRUPTED){
-                throw new CancelOperationExcepetion()
+                throw new CancelOperationException()
 
             }
             throw new Error("Error prompt confirmation")

@@ -1,6 +1,6 @@
 import inquirer from "inquirer";
 import { Prompt } from "../Prompt.js";
-import { CancelOperationExcepetion } from "../../../exceptions/CancelOperationException.js";
+import { CancelOperationException } from "../../../exceptions/CancelOperationException.js";
 import InterruptedPrompt from "inquirer-interrupted-prompt";
 
 export class ConfirmationPrompt implements Prompt<{confirmation:boolean}>{
@@ -18,7 +18,7 @@ export class ConfirmationPrompt implements Prompt<{confirmation:boolean}>{
             }
         } catch (error) {
             if(error==InterruptedPrompt.EVENT_INTERRUPTED){
-                throw new CancelOperationExcepetion()
+                throw new CancelOperationException()
 
             }
             throw new Error("Error prompt confirmation")

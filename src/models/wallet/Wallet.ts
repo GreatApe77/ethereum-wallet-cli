@@ -8,4 +8,5 @@ export interface Wallet{
     encryptWallet(password:string):Promise<string>
     getAddress(accountIndex:number):string
     getMnemonic():string
+    exists():boolean
 }

@@ -1,7 +1,7 @@
 import inquirer from "inquirer";
 import { Prompt } from "../Prompt.js";
 import InterruptedPrompt from "inquirer-interrupted-prompt";
-import { CancelOperationExcepetion } from "../../../exceptions/CancelOperationException.js";
+import { CancelOperationException } from "../../../exceptions/CancelOperationException.js";
 
 export class ChainIdPrompt
 	implements
@@ -39,7 +39,7 @@ export class ChainIdPrompt
 			};
 		} catch (error) {
 			if (error == InterruptedPrompt.EVENT_INTERRUPTED) {
-                throw new CancelOperationExcepetion()
+                throw new CancelOperationException()
 			}
             throw new Error()
 		}

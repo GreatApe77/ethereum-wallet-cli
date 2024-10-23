@@ -79,4 +79,25 @@ export class DatabaseSqlite implements Database {
 	seed(): Promise<void> {
 		throw new Error("Method not implemented.");
 	}
+	selectQuery<T>(query:string,args?:any[]):Promise<T[]>{
+		return new Promise((resolve,reject)=>{
+			DatabaseSqlite.instance.sqliteDB.all<T>(query,args,(err,rows)=>{
+				if(err){
+					reject(err)
+				}
+				resolve(rows)
+			})
+		})
+	}
+	modifyQuery(query:string,args?:any[]):Promise<void>{
+		return new Promise((resolve,reject)=>{
+			DatabaseSqlite.instance.sqliteDB.run(query,args,(res:any,err:any)=>{
+				if(err){
+					reject(err)
+				}
+				resolve()
+			})
+		})
+	}
 }
+

@@ -1,9 +1,9 @@
 import inquirer from "inquirer";
-import { CancelOperationExcepetion } from "../../../exceptions/CancelOperationException.js";
+import { CancelOperationException } from "../../../exceptions/CancelOperationException.js";
 import { Prompt } from "../Prompt.js";
 import InterruptedPrompt from "inquirer-interrupted-prompt";
 /**
- * @throws {CancelOperationExcepetion}
+ * @throws {CancelOperationException}
  */
 export class ChainNamePrompt implements Prompt<{
     chainName:string
@@ -26,7 +26,7 @@ export class ChainNamePrompt implements Prompt<{
             }
         } catch (error) {
             if(error==InterruptedPrompt.EVENT_INTERRUPTED){
-                throw new CancelOperationExcepetion()
+                throw new CancelOperationException()
             }
             throw new Error()
             
