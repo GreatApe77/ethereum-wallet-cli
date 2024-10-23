@@ -3,8 +3,9 @@ import { ChainNamePrompt } from "../services/prompt/add-chain/ChainNamePrompt.js
 import { CurrencyTickerPrompt } from "../services/prompt/add-chain/CurrencyTickerPrompt.js";
 import { RpcUrlPrompt } from "../services/prompt/add-chain/RpcUrlPrompt.js";
 import { Prompt } from "../services/prompt/Prompt.js";
+import { Controller } from "./Controller.js";
 
-export class AddChainController {
+export class AddChainController implements Controller {
 	constructor(
 		private readonly chainIdPrompt: Prompt<{ chainId: number }>,
 		private readonly chainNamePrompt:Prompt<{chainName:string}>,

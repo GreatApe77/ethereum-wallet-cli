@@ -5,8 +5,9 @@ import {
 } from "../services/prompt/create-or-import/CreateOrImportPrompt.js";
 import { LoginOrResetPromptOptions } from "../services/prompt/login-or-reset/LoginOrResetPrompt.js";
 import { Prompt } from "../services/prompt/Prompt.js";
+import { Controller } from "./Controller.js";
 
-export class AuthController {
+export class AuthController implements Controller{
 	constructor(
 		private readonly createOrImportPrompt: Prompt<{
 			option: CreateOrImportPromptOptions;
