@@ -14,7 +14,7 @@ export class ImportedWalletMnemonicPrompt implements Prompt<
             const res = await inquirer.prompt({
                 type:"input",
                 name:"mnemonic",
-                message:"Your 12 word mnemonic phrase:",
+                message:"Your 12 word mnemonic phrase (separated by spaces):",
                 validate: (input: string) => {
                     if(input.split(" ").length !== 12){
                         return "Mnemonic phrase must be 12 words long!"

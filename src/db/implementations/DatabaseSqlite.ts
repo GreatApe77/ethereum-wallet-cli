@@ -4,6 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { getRootDir } from "../../shared/utils/get-root-dir.js";
 import { DB_PATH } from "../../shared/constants/DB_PATH.js";
+import { Network } from "../../models/networks/entities/Network.js";
 export class DatabaseSqlite implements Database {
 	private sqliteDB: sqlite3.Database;
 	private static instance = new DatabaseSqlite();
@@ -52,8 +53,10 @@ export class DatabaseSqlite implements Database {
                         id INT PRIMARY KEY NOT NULL,
                         rpc_url VARCHAR(255) NOT NULL,
                         name VARCHAR(255) NOT NULL,
+						block_explorer_name VARCHAR(255),
                         block_explorer_url VARCHAR(255),
-                        ticker VARCHAR(10)
+                        ticker VARCHAR(10) NOT NULL,
+						currency_decimals INT NOT NULL
                     );
                 `,
 					(err) => {
@@ -76,8 +79,95 @@ export class DatabaseSqlite implements Database {
 			resolve();
 		});
 	}
-	seed(): Promise<void> {
-		throw new Error("Method not implemented.");
+	async seed(): Promise<void> {
+		const standardNetworks: Network[] = [
+			new Network({
+				id: 1,
+				name: 'Ethereum Mainnet',
+				rpcUrl: "https://cloudflare-eth.com",
+				blockExplorerUrl: "https://etherscan.io",
+				blockExplorerName: "Etherscan",
+				currencyTicker: "ETH",
+				currencyDecimals: 18
+			}),
+			new Network({
+				id: 4002,
+				name: 'Fantom Testnet',
+				rpcUrl: "https://rpc.testnet.fantom.network",
+				blockExplorerUrl: "https://testnet.ftmscan.com",
+				blockExplorerName: "Fantom Testnet Explorer",
+				currencyTicker: "FTM",
+				currencyDecimals: 18
+			}),
+			new Network({
+				id: 11155111,
+				name: 'Sepolia',
+				currencyTicker: "ETH",
+				currencyDecimals: 18,
+				rpcUrl: "https://rpc.sepolia.org",
+				blockExplorerUrl: "https://sepolia.etherscan.io",
+				blockExplorerName: "Sepolia Explorer"
+			}),
+			new Network({
+				id: 1337,
+				name: 'Ganache',
+				currencyTicker: "ETH",
+				currencyDecimals: 18,
+				rpcUrl: "http://localhost:7545",
+			})
+		];
+	
+		return new Promise((resolve, reject) => {
+			this.sqliteDB.serialize(() => {
+				// Start transaction
+				this.sqliteDB.run("BEGIN TRANSACTION;", (err) => {
+					if (err) {
+						return reject(err);
+					}
+	
+					const statement = this.sqliteDB.prepare(
+						"INSERT INTO networks (id, rpc_url, name, block_explorer_name, block_explorer_url, ticker,currency_decimals) VALUES (?, ?, ?, ?, ?, ?, ?);"
+					);
+	
+					try {
+						standardNetworks.forEach((network) => {
+							statement.run(
+								network.getId(),
+								network.getRpcUrl(),
+								network.getName(),
+								network.getBlockExplorerName(),
+								network.getBlockExplorerUrl(),
+								network.getCurrencyTicker(),
+								network.getCurrencyDecimals(),
+								(err:any) => {
+									if (err) throw err;
+								}
+							);
+						});
+	
+						// Finalize the prepared statement
+						statement.finalize((err) => {
+							if (err) {
+								this.sqliteDB.run("ROLLBACK;", () => reject(err));
+								return;
+							}
+	
+							// Commit the transaction
+							this.sqliteDB.run("COMMIT;", (err) => {
+								if (err) {
+									this.sqliteDB.run("ROLLBACK;", () => reject(err));
+									return;
+								}
+								resolve();
+							});
+						});
+					} catch (err) {
+						statement.finalize();
+						this.sqliteDB.run("ROLLBACK;", () => reject(err));
+					}
+				});
+			});
+		});
 	}
 	selectQuery<T>(query:string,args?:any[]):Promise<T[]>{
 		return new Promise((resolve,reject)=>{

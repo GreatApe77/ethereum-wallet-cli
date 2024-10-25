@@ -9,6 +9,7 @@ const dummyFileSuccess = JSON.stringify({
 	connectedAccountIndex: 0,
 	connectedChainId: 1,
 	needsSeed: true,
+	needsMigration: true,
 } as Partial<Settings>);
 describe("SettingsFs - Test Suite", () => {
 	const mock_readFileSync_fail = vi

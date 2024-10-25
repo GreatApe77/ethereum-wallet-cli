@@ -8,6 +8,7 @@ export class SettingsFs implements SettingsPersistence {
 		connectedAccountIndex: 0,
 		connectedChainId: 11155111, //SEPOLIA,
 		needsSeed: true,
+		needsMigration: true,
 	};
 	constructor() {
 		this.read();

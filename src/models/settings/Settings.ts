@@ -1,5 +1,6 @@
 export interface Settings{
     connectedAccountIndex:number,
     connectedChainId:number,
-    needsSeed:boolean
+    needsSeed:boolean,
+    needsMigration:boolean
 }

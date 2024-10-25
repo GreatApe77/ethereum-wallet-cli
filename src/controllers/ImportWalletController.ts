@@ -10,6 +10,7 @@ import { CancelOperationException } from "../exceptions/CancelOperationException
 import { sleep } from "../shared/utils/sleep.js";
 import { CancelOperationInformation } from "../ui/components/CancelOperationInformation.js";
 import { Clear } from "../ui/components/Clear.js";
+import { Spinner } from "../ui/components/Spinner.js";
 export class ImportWalletController implements Controller{
     
     constructor(
@@ -30,16 +31,21 @@ export class ImportWalletController implements Controller{
             const {mnemonic} = await this.importMnemonicPrompt.question()
             
             const {password} = await this.createPasswordForImportedWalletPrompt.question()
+            Spinner.start()
             EthersWallet.getInstance().fromMnemonic(mnemonic)
             const encryptedWallet = await EthersWallet.getInstance().encryptWallet(password)
             await this.walletRepository.saveEncryptedWallet(encryptedWallet)
+            Spinner.success()
             ActionFeedback.render("Wallet Imported successfully","success")
             await sleep(1)
             console.clear()
             return await this.navigationService.navigateTo("auth")
         } catch (error) {
             if(error instanceof CancelOperationException){
+                Spinner.start()
                 ActionFeedback.render("Operation Cancelled","warning")
+                await sleep(1)
+                Spinner.success()
                 return await this.navigationService.navigateTo("auth")
             }
         }

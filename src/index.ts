@@ -9,6 +9,11 @@ async function main(){
     const db = DatabaseSqlite.getInstance()
     if(settings.settings.needsSeed){
         await db.migrate()
+        settings.settings.needsMigration = false
+        settings.save()
+    }
+    if(settings.settings.needsSeed){
+        await db.seed()
         settings.settings.needsSeed = false
         settings.save()
     }
