@@ -9,14 +9,20 @@ export class WalletRepositorySqlite implements WalletRepository{
         )
     }
     db: DatabaseSqlite = DatabaseSqlite.getInstance();
-    async getEncryptedWallet(): Promise<string> {
+    async getEncryptedWallet(): Promise<string|null> {
         const encryptedWallet = await this.db.selectQuery<{encryptedWalletJson:string}>(
             "SELECT encrypted_json_wallet as encryptedWalletJson FROM wallets;"
         )
         if(encryptedWallet.length === 0){
-            
+            return null
         }
+        return encryptedWallet[0].encryptedWalletJson
 
+    }
+    async deleteEncryptedWallet(): Promise<void> {
+        await this.db.modifyQuery(
+            "DELETE FROM wallets;"
+        )
     }
     
 }

@@ -29,6 +29,8 @@ export class CreateOrImportPrompt
 				},
 			],
 		});
-		return res.name as { option: CreateOrImportPromptOptions };
+		return {
+			option: res.name as CreateOrImportPromptOptions,
+		}
 	}
 }

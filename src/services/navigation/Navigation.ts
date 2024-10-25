@@ -1,4 +1,6 @@
+import { Screens } from "../../shared/types/Screens.js";
+
 export interface Navigation{
-    navigateTo(route: string): void;
+    navigateTo(route: Screens): Promise<void>;
     
 }

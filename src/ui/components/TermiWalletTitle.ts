@@ -3,6 +3,7 @@
 import figlet from "figlet";
 import { MarginLeft } from "./MarginLeft.js";
 import { LineBreak } from "./LineBreak.js";
+import chalk from "chalk";
 
 export class TermiWalletTitle {
     
@@ -10,7 +11,8 @@ export class TermiWalletTitle {
         console.log(figlet.textSync("TermiWallet",{
             horizontalLayout:"controlled smushing"
         }))
-        MarginLeft.render(" Your Ethereum personal wallet in the terminal!")
+        MarginLeft.render(chalk.bold(" Your Ethereum personal wallet in the terminal!")
+    )
         LineBreak.render()
     }
 }

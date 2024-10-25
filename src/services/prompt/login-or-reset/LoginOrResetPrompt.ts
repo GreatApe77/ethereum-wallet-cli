@@ -23,11 +23,13 @@ export class LoginOrResetPrompt
                     value: LoginOrResetPromptOptions.LOGIN,
                 },
                 {
-                    name: "Reset Password",
+                    name: "Reset Wallet",
                     value: LoginOrResetPromptOptions.RESET,
                 },
             ],
         });
-        return res.name as { option: LoginOrResetPromptOptions };
+        return {
+            option: res.name as LoginOrResetPromptOptions,
+        }
     }
 }

@@ -2,6 +2,7 @@ import { DatabaseSqlite } from "../db/implementations/DatabaseSqlite.js"
 import { Database } from "../db/interfaces/Database.js"
 import { EthersWallet } from "../models/wallet/implementations/EthersWallet.js"
 import { WalletRepository } from "../models/wallet/repository/WalletRepository.js"
+import { Navigation } from "../services/navigation/Navigation.js"
 import { ConfirmationPrompt } from "../services/prompt/generate-wallet/ConfirmationPrompt.js"
 import { CreatePasswordPrompt } from "../services/prompt/generate-wallet/CreatePasswordPrompt.js"
 import { Prompt } from "../services/prompt/Prompt.js"
@@ -17,7 +18,8 @@ export class GenerateNewWalletController implements Controller{
     constructor(
         private readonly confirmationPrompt: Prompt<{confirmation:boolean}>,
         private readonly createPasswordPrompt: Prompt<{password:string}>,
-        private readonly walletRepository:WalletRepository
+        private readonly walletRepository:WalletRepository,
+        private readonly navigationService:Navigation
     ){}
 
     async handle(){
@@ -31,11 +33,11 @@ export class GenerateNewWalletController implements Controller{
             const {password} = await this.createPasswordPrompt.question()
             const encryptedWallet =await  EthersWallet.getInstance().encryptWallet(password)
             await this.walletRepository.saveEncryptedWallet(encryptedWallet)
-            //navigate to initial menu
+            await this.navigationService.navigateTo("auth")
         }else{
            //alert user that wallet was not saved
            //navigate to initial menu
-
+            this.navigationService.navigateTo("auth")
         }
     }
 }

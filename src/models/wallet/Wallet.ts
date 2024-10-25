@@ -9,4 +9,6 @@ export interface Wallet{
     getAddress(accountIndex:number):string
     getMnemonic():string
     exists():boolean
+    reset():void
+    fromMnemonic(mnemonic:string):void
 }

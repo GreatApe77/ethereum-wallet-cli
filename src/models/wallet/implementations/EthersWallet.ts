@@ -7,10 +7,20 @@ import { WalletRepositorySqlite } from "../repository/implementations/WalletRepo
 export class EthersWallet implements Wallet {
 	private static instance: EthersWallet | null = null;
 	private ethersWallet: ethers.HDNodeWallet | null;
-	private walletRepository: WalletRepository = new WalletRepositorySqlite();
+	
 	private constructor() {
 		this.ethersWallet = null;
 		
+	}
+	fromMnemonic(mnemonic: string): void {
+		this.ethersWallet = ethers.HDNodeWallet.fromPhrase(
+			mnemonic,
+			undefined,
+			PARENT_PATH
+		);
+	}
+	reset(): void {
+		this.ethersWallet = null;
 	}
 	exists(): boolean {
 		throw new Error("Method not implemented.");

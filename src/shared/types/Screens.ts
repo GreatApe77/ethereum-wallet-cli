@@ -1,1 +1,7 @@
-export type Screens = "main-menu" | "generate-wallet" | "reset-wallet";
+export type Screens =
+	| "auth"
+	| "generate-wallet"
+	| "import-wallet"
+	| "login"
+	| "reset"
+    |"main-menu"
