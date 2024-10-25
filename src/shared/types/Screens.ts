@@ -5,3 +5,4 @@ export type Screens =
 	| "login"
 	| "reset"
     |"main-menu"
+	|"copy-to-clipboard"

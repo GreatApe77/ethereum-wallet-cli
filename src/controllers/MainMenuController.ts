@@ -4,34 +4,75 @@ import { FancyTitle } from "../ui/components/FancyTitle.js";
 import { MarginLeft } from "../ui/components/MarginLeft.js";
 import { Controller } from "./Controller.js";
 import { NetworkRepository } from "../models/networks/repository/NetworkRepository.js";
-import{Navigation} from "../services/navigation/Navigation.js"
+import { Navigation } from "../services/navigation/Navigation.js";
 import { EthersWallet } from "../models/wallet/implementations/EthersWallet.js";
 import { formatUnits } from "../shared/utils/formatEther.js";
-export class MainMenuController implements Controller{
-    constructor(
-        private readonly NetworkRepository: NetworkRepository,
-        private readonly navigationService: Navigation
-    ){
+import { Clear } from "../ui/components/Clear.js";
+import { Spinner } from "../ui/components/Spinner.js";
+import { Prompt } from "../services/prompt/Prompt.js";
+import { MainMenuOptions } from "../services/prompt/main-menu-options/MainMenuPrompt.js";
+export class MainMenuController implements Controller {
+	constructor(
+		private readonly NetworkRepository: NetworkRepository,
+		private readonly navigationService: Navigation,
+		private readonly mainMenuPrompt:Prompt<{ option: MainMenuOptions }>
+	) {}
+	async handle(): Promise<void> {
+		Clear.render();
+		Spinner.start("Loading...");
+		const settings = SettingsFs.getInstance();
+		const connectedNetwork = await this.NetworkRepository.getNetworkById(
+			settings.settings.connectedChainId
+		);
+		if (!connectedNetwork) {
+			throw new Error("Connected Network not found");
+		}
+		const balance = await EthersWallet.getInstance().getBalance(
+			connectedNetwork?.getRpcUrl()
+		);
+		Spinner.stop();
+		FancyDivider.render();
+		FancyTitle.render("Main Menu");
+		FancyDivider.render();
 
-    }
-    async handle(): Promise<void> {
-        FancyDivider.render()
-        FancyTitle.render("Main Menu")
-        FancyDivider.render()
-        //
-        const settings =SettingsFs.getInstance()
-        const connectedNetwork = await this.NetworkRepository.getNetworkById(settings.settings.connectedChainId)
-        if(!connectedNetwork){
-            throw new Error("Connected Network not found")
-        }
-        const balance = await EthersWallet.getInstance().getBalance(connectedNetwork?.getRpcUrl())
+		//const connectedNetworkId = settings.settings.connectedChainId
 
-        //const connectedNetworkId = settings.settings.connectedChainId
+		MarginLeft.render(`Connected Network: ${connectedNetwork?.getName()}`);
+		MarginLeft.render(
+			`Connected Account: ${EthersWallet.getInstance().getAddress(
+				settings.settings.connectedAccountIndex
+			)}`
+		);
+		MarginLeft.render(
+			`Balance: ${formatUnits(
+				balance,
+				18
+			)} ${connectedNetwork?.getCurrencyTicker()}`
+		);
+		const { option } = await this.mainMenuPrompt.question();
+		switch (option) {
+			case MainMenuOptions.ACCOUNT_QR_CODE:
+				await this.navigationService.navigateTo("account-qr-code")
+				break;
 
-        MarginLeft.render(`Connected Network: ${connectedNetwork?.getName()}`)
-        MarginLeft.render(`Connected Account: ${EthersWallet.getInstance().getAddress(settings.settings.connectedAccountIndex)}`)
-        MarginLeft.render(`Balance: ${formatUnits(balance,18)} ${connectedNetwork?.getCurrencyTicker()}`)
-        
-    }
-    
+			case MainMenuOptions.COPY_TO_CLIPBOARD:
+				await this.navigationService.navigateTo("copy-to-clipboard")
+				break;
+			
+			case MainMenuOptions.SWITCH_ACCOUNT:
+				await this.navigationService.navigateTo("switch-account")
+				break;
+		
+			case MainMenuOptions.NETWORKS_MENU:
+				await this.navigationService.navigateTo("networks-menu")
+				break;
+			case MainMenuOptions.SEND_TRANSACTION:
+				await this.navigationService.navigateTo("send-transaction")
+				break;
+			case MainMenuOptions.ERC20_MENU:
+				await this.navigationService.navigateTo("erc20-menu")
+				break;
+			
+		}
+	}
 }
