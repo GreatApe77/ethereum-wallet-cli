@@ -7,6 +7,7 @@ import {
 } from "../services/prompt/create-or-import/CreateOrImportPrompt.js";
 import { LoginOrResetPromptOptions } from "../services/prompt/login-or-reset/LoginOrResetPrompt.js";
 import { Prompt } from "../services/prompt/Prompt.js";
+import { Clear } from "../ui/components/Clear.js";
 import { FancyTitle } from "../ui/components/FancyTitle.js";
 import { TermiWalletTitle } from "../ui/components/TermiWalletTitle.js";
 import { Controller } from "./Controller.js";
@@ -23,7 +24,9 @@ export class AuthController implements Controller {
 		private readonly walletRepository: WalletRepository
 	) {}
 	async handle(): Promise<void> {
+		
 		const walletRegistered = await this.walletRepository.getEncryptedWallet();
+		Clear.render()
 		TermiWalletTitle.render();
 		if (!walletRegistered) {
 			const { option } = await this.createOrImportPrompt.question();
