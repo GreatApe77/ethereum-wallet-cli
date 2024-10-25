@@ -10,7 +10,19 @@ export class NetworkRepositorySqlite implements NetworkRepository{
     }
     async getNetworkById(id: number): Promise<Network | null> {
         const networkFromDb =await  DatabaseSqlite.getInstance()
-        .selectQuery<Network>("SELECT * FROM networks WHERE id = ?;", [id])
+        .selectQuery<Network>(`SELECT 
+                
+                id,
+                rpc_url as rpcUrl,
+                name,
+                block_explorer_name as blockExplorerName,
+                block_explorer_url as blockExplorerUrl,
+                ticker as currencyTicker,
+                currency_decimals as currencyDecimals
+                
+
+            
+            FROM networks WHERE id = ?;`, [id])
         if(networkFromDb.length===0){
             return null;
         }

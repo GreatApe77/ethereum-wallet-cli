@@ -5,6 +5,7 @@ import { ImportWalletController } from "../../../controllers/ImportWalletControl
 import { LoginController } from "../../../controllers/LoginController.js";
 import { MainMenuController } from "../../../controllers/MainMenuController.js";
 import { ResetWalletController } from "../../../controllers/ResetWalletController.js";
+import { NetworkRepositorySqlite } from "../../../models/networks/repository/implementation/NeworkRepositorySqlite.js";
 import { WalletRepositorySqlite } from "../../../models/wallet/repository/implementations/WalletRepositorySqlite.js";
 import { Screens } from "../../../shared/types/Screens.js";
 import { CreateOrImportPrompt } from "../../prompt/create-or-import/CreateOrImportPrompt.js";
@@ -47,7 +48,10 @@ export class AppNavigation implements Navigation {
             new CreatePasswordForImportedWalletPrompt(),
             this
         ),
-        "main-menu": new MainMenuController()
+        "main-menu": new MainMenuController(
+			new NetworkRepositorySqlite(),
+			this
+		)
 	};
 
 	async navigateTo(screen: Screens): Promise<void> {

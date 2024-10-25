@@ -4,14 +4,21 @@ import { Settings } from "../Settings.js";
 import path from "node:path";
 import fs from "node:fs";
 export class SettingsFs implements SettingsPersistence {
+	private static instance: SettingsFs;
 	public settings: Settings = {
 		connectedAccountIndex: 0,
 		connectedChainId: 11155111, //SEPOLIA,
 		needsSeed: true,
 		needsMigration: true,
 	};
-	constructor() {
+	private constructor() {
 		this.read();
+	}
+	static getInstance(): SettingsFs {
+		if (!this.instance) {
+			this.instance = new SettingsFs();
+		}
+		return this.instance;
 	}
 	save(): void {
 		const settingsPath = path.join(getRootDir(), "database", "settings.json");

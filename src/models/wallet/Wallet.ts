@@ -1,6 +1,6 @@
 
 export interface Wallet{
-    getBalance():Promise<bigint>
+    getBalance(providerUrl:string):Promise<bigint>
     switchAccount(accountIndex:number):Promise<void>
     generateNew():void
     login(password:string,jsonWalletString:string):Promise<void>

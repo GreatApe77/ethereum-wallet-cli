@@ -5,9 +5,9 @@ import { AppNavigation } from "./services/navigation/implementations/AppNavigati
 import InterruptedPrompt from "inquirer-interrupted-prompt"
 InterruptedPrompt.fromAll(inquirer)
 async function main(){
-    const settings = new SettingsFs()
+    const settings =SettingsFs.getInstance()
     const db = DatabaseSqlite.getInstance()
-    if(settings.settings.needsSeed){
+    if(settings.settings.needsMigration){
         await db.migrate()
         settings.settings.needsMigration = false
         settings.save()

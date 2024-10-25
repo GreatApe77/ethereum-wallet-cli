@@ -11,6 +11,11 @@ export class Spinner{
     static stop(){
         this.spinner.stop()
     }
+    static error(message:string="Error"){
+        this.spinner.error({
+            text:message
+        })
+    }
     static success(message:string="Success"){
         this.spinner.success({
             text:message
