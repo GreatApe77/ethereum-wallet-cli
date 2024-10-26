@@ -11,6 +11,7 @@ import { LogoutController } from "../../../controllers/LogoutController.js";
 import { MainMenuController } from "../../../controllers/MainMenuController.js";
 import { NetworksMenuController } from "../../../controllers/NetworksMenuController.js";
 import { ResetWalletController } from "../../../controllers/ResetWalletController.js";
+import { SendTransactionController } from "../../../controllers/SendTransactionController.js";
 import { SwitchAccountController } from "../../../controllers/SwitchAccountController.js";
 import { SwitchNetworkController } from "../../../controllers/SwitchNetworkController.js";
 import { NetworkRepositorySqlite } from "../../../models/networks/repository/implementation/NeworkRepositorySqlite.js";
@@ -174,6 +175,15 @@ export class AppNavigation implements Navigation {
 				this,
 				
 			),
+			"send-transaction":new SendTransactionController(
+				this.appContainer.getService("TargetAddressPrompt"),
+				this.appContainer.getService("TargetValuePrompt"),
+				this.appContainer.getService("ConfirmTransactionPrompt"),
+				this.appContainer.getService("CacheService"),
+				this.appContainer.getService("NetworkRepository"),
+	
+				this
+			)
 			
 		};
 	}

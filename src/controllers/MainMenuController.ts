@@ -12,6 +12,7 @@ import { Spinner } from "../ui/components/Spinner.js";
 import { Prompt } from "../services/prompt/Prompt.js";
 import { MainMenuOptions } from "../services/prompt/main-menu-options/MainMenuPrompt.js";
 import { CacheService } from "../services/cache/CacheService.js";
+import { getCacheBalanceKey } from "../shared/utils/get-cache-balance-key.js";
 export class MainMenuController implements Controller {
 	constructor(
 		private readonly NetworkRepository: NetworkRepository,
@@ -35,15 +36,18 @@ export class MainMenuController implements Controller {
 		//  const balance = await EthersWallet.getInstance().getBalance(
 		//  	connectedNetwork?.getRpcUrl()
 		//  );
-		let balance = this.cacheService.get<bigint>(`${settings.settings.connectedChainId}-${settings.settings.connectedAccountIndex}-balance`)
+		const cacheKey = getCacheBalanceKey({
+			accountAddress: EthersWallet.getInstance().getAddress(settings.settings.connectedAccountIndex),
+			networkdId: settings.settings.connectedChainId,
+			accountIndex: settings.settings.connectedAccountIndex
+		})
+		let balance = this.cacheService.get<bigint>(cacheKey)
 		
 		if(balance===null){
 			balance = await EthersWallet.getInstance().getBalance(
 				connectedNetwork.getRpcUrl()
 			)
-			this.cacheService.set(
-				`${settings.settings.connectedChainId}-${settings.settings.connectedAccountIndex}-balance`
-				,balance)
+			this.cacheService.set(cacheKey,balance)
 		}
 
 		Spinner.success();
@@ -84,7 +88,7 @@ export class MainMenuController implements Controller {
 				await this.navigationService.navigateTo("networks-menu");
 				break;
 			case MainMenuOptions.SEND_TRANSACTION:
-				//await this.navigationService.navigateTo("send-transaction");
+				await this.navigationService.navigateTo("send-transaction");
 				break;
 			case MainMenuOptions.ERC20_MENU:
 				//await this.navigationService.navigateTo("erc20-menu");

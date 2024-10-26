@@ -11,4 +11,5 @@ export type Screens =
 	| "qr-code"
 	| "networks-menu"
 	| "switch-network"
-	| "add-network";
+	| "add-network"
+	| "send-transaction";

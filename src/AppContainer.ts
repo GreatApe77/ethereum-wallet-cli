@@ -21,6 +21,9 @@ import { MainMenuPrompt } from "./services/prompt/main-menu-options/MainMenuProm
 import { NetworksMenuPrompt } from "./services/prompt/networks-menu-options/NetworksMenuPrompt.js";
 import { BackToMainMenuPrompt } from "./services/prompt/qr-code/BackToMainMenuPrompt.js";
 import { ResetWalletConfirmationPrompt } from "./services/prompt/reset/ResetWalletConfirmationPrompt.js";
+import { ConfirmTransactionPrompt } from "./services/prompt/send-transaction/ConfirmTransactionPrompt.js";
+import { TargetAddressPrompt } from "./services/prompt/send-transaction/TargetAddressPrompt.js";
+import { TargetValuePrompt } from "./services/prompt/send-transaction/TargetValuePrompt.js";
 import { SwitchNetworkPrompt } from "./services/prompt/switch-network/SwitchNetworkPrompt.js";
 import { SwitchAccountPrompt } from "./services/prompt/switchAccount/SwitchAccountPrompt.js";
 
@@ -68,7 +71,9 @@ export class AppContainer {
 		);
 		this.registerService("SwitchNetworkPrompt", new SwitchNetworkPrompt());
 		this.registerService("SwitchAccountPrompt", new SwitchAccountPrompt());
-		
+		this.registerService("ConfirmTransactionPrompt", new ConfirmTransactionPrompt());
+		this.registerService("TargetAddressPrompt", new TargetAddressPrompt());
+		this.registerService("TargetValuePrompt", new TargetValuePrompt());
 
 		//REPOSITORYS
 		this.registerService("WalletRepository", new WalletRepositorySqlite());
