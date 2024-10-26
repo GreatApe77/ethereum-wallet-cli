@@ -7,6 +7,7 @@ export enum MainMenuOptions {
 	NETWORKS_MENU,
 	SEND_TRANSACTION,
 	ERC20_MENU,
+	LOG_OUT,
 }
 
 export class MainMenuPrompt implements Prompt<{ option: MainMenuOptions }> {
@@ -41,6 +42,10 @@ export class MainMenuPrompt implements Prompt<{ option: MainMenuOptions }> {
 				{
 					name: "Tokens Menu",
 					value: MainMenuOptions.ERC20_MENU,
+				},
+				{
+					name: "Log Out",
+					value: MainMenuOptions.LOG_OUT,
 				},
 			],
 		});

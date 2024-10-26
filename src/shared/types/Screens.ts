@@ -4,5 +4,8 @@ export type Screens =
 	| "import-wallet"
 	| "login"
 	| "reset"
-    |"main-menu"
-	|"copy-to-clipboard"
+	| "main-menu"
+	| "copy-to-clipboard"
+	| "switch-account"
+	| "logout"
+	| "qr-code";

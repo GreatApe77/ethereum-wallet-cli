@@ -15,7 +15,7 @@ export class MainMenuController implements Controller {
 	constructor(
 		private readonly NetworkRepository: NetworkRepository,
 		private readonly navigationService: Navigation,
-		private readonly mainMenuPrompt:Prompt<{ option: MainMenuOptions }>
+		private readonly mainMenuPrompt: Prompt<{ option: MainMenuOptions }>
 	) {}
 	async handle(): Promise<void> {
 		Clear.render();
@@ -30,7 +30,8 @@ export class MainMenuController implements Controller {
 		const balance = await EthersWallet.getInstance().getBalance(
 			connectedNetwork?.getRpcUrl()
 		);
-		Spinner.stop();
+		Spinner.success();
+		Clear.render();
 		FancyDivider.render();
 		FancyTitle.render("Main Menu");
 		FancyDivider.render();
@@ -52,27 +53,29 @@ export class MainMenuController implements Controller {
 		const { option } = await this.mainMenuPrompt.question();
 		switch (option) {
 			case MainMenuOptions.ACCOUNT_QR_CODE:
-				await this.navigationService.navigateTo("account-qr-code")
+				await this.navigationService.navigateTo("qr-code");
 				break;
 
 			case MainMenuOptions.COPY_TO_CLIPBOARD:
-				await this.navigationService.navigateTo("copy-to-clipboard")
+				await this.navigationService.navigateTo("copy-to-clipboard");
 				break;
-			
+
 			case MainMenuOptions.SWITCH_ACCOUNT:
-				await this.navigationService.navigateTo("switch-account")
+				await this.navigationService.navigateTo("switch-account");
 				break;
-		
+
 			case MainMenuOptions.NETWORKS_MENU:
-				await this.navigationService.navigateTo("networks-menu")
+				await this.navigationService.navigateTo("networks-menu");
 				break;
 			case MainMenuOptions.SEND_TRANSACTION:
-				await this.navigationService.navigateTo("send-transaction")
+				await this.navigationService.navigateTo("send-transaction");
 				break;
 			case MainMenuOptions.ERC20_MENU:
-				await this.navigationService.navigateTo("erc20-menu")
+				await this.navigationService.navigateTo("erc20-menu");
 				break;
-			
+			case MainMenuOptions.LOG_OUT:
+				await this.navigationService.navigateTo("logout")
+				break;
 		}
 	}
 }

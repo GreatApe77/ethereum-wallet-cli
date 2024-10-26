@@ -7,14 +7,15 @@ export class SwitchAccountPrompt
 			selectedAccount: number;
 		}>
 {
-	private wallet = EthersWallet.getInstance();
+	
 
 	async question(
 		validate?: (input: string) => boolean
 	): Promise<{ selectedAccount: number }> {
+		const wallet = EthersWallet.getInstance();
 		const addresses = new Array<string>(20);
 		for (let i = 0; i < addresses.length; i++) {
-			addresses[i] = this.wallet.getAddress(i);
+			addresses[i] = wallet.getAddress(i);
 		}
 		const res = await inquirer.prompt({
 			type: "list",

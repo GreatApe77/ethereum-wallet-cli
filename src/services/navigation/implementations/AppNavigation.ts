@@ -2,10 +2,13 @@ import { AuthController } from "../../../controllers/AuthController.js";
 import { Controller } from "../../../controllers/Controller.js";
 import { CopyToClipBoardController } from "../../../controllers/CopyToClipboardController.js";
 import { GenerateNewWalletController } from "../../../controllers/GenerateNewWalletController.js";
+import { GenerateQrCodeController } from "../../../controllers/GenerateQrCodeController.js";
 import { ImportWalletController } from "../../../controllers/ImportWalletController.js";
 import { LoginController } from "../../../controllers/LoginController.js";
+import { LogoutController } from "../../../controllers/LogoutController.js";
 import { MainMenuController } from "../../../controllers/MainMenuController.js";
 import { ResetWalletController } from "../../../controllers/ResetWalletController.js";
+import { SwitchAccountController } from "../../../controllers/SwitchAccountController.js";
 import { NetworkRepositorySqlite } from "../../../models/networks/repository/implementation/NeworkRepositorySqlite.js";
 import { WalletRepositorySqlite } from "../../../models/wallet/repository/implementations/WalletRepositorySqlite.js";
 import { Screens } from "../../../shared/types/Screens.js";
@@ -18,7 +21,9 @@ import { ImportedWalletMnemonicPrompt } from "../../prompt/import-wallet/Importe
 import { LoginOrResetPrompt } from "../../prompt/login-or-reset/LoginOrResetPrompt.js";
 import { WalletPasswordPrompt } from "../../prompt/login/WalletPasswordPrompt.js";
 import { MainMenuPrompt } from "../../prompt/main-menu-options/MainMenuPrompt.js";
+import { BackToMainMenuPrompt } from "../../prompt/qr-code/BackToMainMenuPrompt.js";
 import { ResetWalletConfirmationPrompt } from "../../prompt/reset/ResetWalletConfirmationPrompt.js";
+import { SwitchAccountPrompt } from "../../prompt/switchAccount/SwitchAccountPrompt.js";
 import { Navigation } from "../Navigation.js";
 
 export class AppNavigation implements Navigation {
@@ -59,7 +64,13 @@ export class AppNavigation implements Navigation {
 		"copy-to-clipboard": new CopyToClipBoardController(
 			new ClipboardServiceClipboardy(),
 			this
-		)
+		),
+		"switch-account": new SwitchAccountController(
+			new SwitchAccountPrompt(),
+			this
+		),
+		logout: new LogoutController(this),
+		"qr-code": new GenerateQrCodeController(new BackToMainMenuPrompt(), this),
 	};
 
 	async navigateTo(screen: Screens): Promise<void> {
