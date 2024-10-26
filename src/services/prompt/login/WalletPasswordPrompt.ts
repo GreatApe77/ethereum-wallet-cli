@@ -5,7 +5,7 @@ import { CancelOperationException } from "../../../exceptions/CancelOperationExc
 
 export class WalletPasswordPrompt implements Prompt<{ password: string }> {
 	async question(
-		validate?: (input: string) => boolean
+		
 	): Promise<{ password: string }> {
         try {
             

@@ -12,7 +12,6 @@ export enum MainMenuOptions {
 
 export class MainMenuPrompt implements Prompt<{ option: MainMenuOptions }> {
 	async question(
-		validate?: (input: string) => boolean
 	): Promise<{ option: MainMenuOptions }> {
 		const res = await inquirer.prompt({
 			type: "list",

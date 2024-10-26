@@ -8,7 +8,7 @@ import InterruptedPrompt from "inquirer-interrupted-prompt";
 export class ChainNamePrompt implements Prompt<{
     chainName:string
 }>{
-    async question(validate?: (input: string) => boolean): Promise<{ chainName: string; }> {
+    async question(): Promise<{ chainName: string; }> {
         try {
         
             const res = await inquirer.prompt({

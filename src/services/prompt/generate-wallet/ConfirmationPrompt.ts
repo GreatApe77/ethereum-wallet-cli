@@ -4,7 +4,7 @@ import { CancelOperationException } from "../../../exceptions/CancelOperationExc
 import InterruptedPrompt from "inquirer-interrupted-prompt";
 
 export class ConfirmationPrompt implements Prompt<{confirmation:boolean}>{
-    async question(validate?: (input: string) => boolean): Promise<{ confirmation: boolean; }> {
+    async question(): Promise<{ confirmation: boolean; }> {
         try {
             
             const res = await inquirer.prompt({

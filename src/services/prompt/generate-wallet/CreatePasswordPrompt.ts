@@ -4,7 +4,7 @@ import { CancelOperationException } from "../../../exceptions/CancelOperationExc
 import InterruptedPrompt from "inquirer-interrupted-prompt";
 
 export class CreatePasswordPrompt implements Prompt<{password:string}>{
-    async question(validate?: (input: string) => boolean): Promise<{ password:string; }> {
+    async question(): Promise<{ password:string; }> {
         try {
             
             const res = await inquirer.prompt({

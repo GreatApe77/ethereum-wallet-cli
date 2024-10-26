@@ -7,6 +7,7 @@ import { ImportWalletController } from "../../../controllers/ImportWalletControl
 import { LoginController } from "../../../controllers/LoginController.js";
 import { LogoutController } from "../../../controllers/LogoutController.js";
 import { MainMenuController } from "../../../controllers/MainMenuController.js";
+import { NetworksMenuController } from "../../../controllers/NetworksMenuController.js";
 import { ResetWalletController } from "../../../controllers/ResetWalletController.js";
 import { SwitchAccountController } from "../../../controllers/SwitchAccountController.js";
 import { NetworkRepositorySqlite } from "../../../models/networks/repository/implementation/NeworkRepositorySqlite.js";
@@ -21,6 +22,7 @@ import { ImportedWalletMnemonicPrompt } from "../../prompt/import-wallet/Importe
 import { LoginOrResetPrompt } from "../../prompt/login-or-reset/LoginOrResetPrompt.js";
 import { WalletPasswordPrompt } from "../../prompt/login/WalletPasswordPrompt.js";
 import { MainMenuPrompt } from "../../prompt/main-menu-options/MainMenuPrompt.js";
+import { NetworksMenuPrompt } from "../../prompt/networks-menu-options/NetworksMenuPrompt.js";
 import { BackToMainMenuPrompt } from "../../prompt/qr-code/BackToMainMenuPrompt.js";
 import { ResetWalletConfirmationPrompt } from "../../prompt/reset/ResetWalletConfirmationPrompt.js";
 import { SwitchAccountPrompt } from "../../prompt/switchAccount/SwitchAccountPrompt.js";
@@ -71,6 +73,11 @@ export class AppNavigation implements Navigation {
 		),
 		logout: new LogoutController(this),
 		"qr-code": new GenerateQrCodeController(new BackToMainMenuPrompt(), this),
+		"networks-menu":new NetworksMenuController(
+			new NetworkRepositorySqlite(),
+			new NetworksMenuPrompt(),
+			this
+		)
 	};
 
 	async navigateTo(screen: Screens): Promise<void> {

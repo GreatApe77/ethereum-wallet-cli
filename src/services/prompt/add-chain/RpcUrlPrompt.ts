@@ -6,7 +6,7 @@ import { CancelOperationException } from "../../../exceptions/CancelOperationExc
 export class RpcUrlPrompt implements Prompt<{
     rpcUrl:string
 }>{
-    async question(validate?: (input: string) => boolean): Promise<{ rpcUrl: string; }> {
+    async question(): Promise<{ rpcUrl: string; }> {
         try {
         
             const res = await inquirer.prompt({

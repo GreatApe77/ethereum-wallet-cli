@@ -7,11 +7,7 @@ export class SwitchAccountPrompt
 			selectedAccount: number;
 		}>
 {
-	
-
-	async question(
-		validate?: (input: string) => boolean
-	): Promise<{ selectedAccount: number }> {
+	async question(): Promise<{ selectedAccount: number }> {
 		const wallet = EthersWallet.getInstance();
 		const addresses = new Array<string>(20);
 		for (let i = 0; i < addresses.length; i++) {

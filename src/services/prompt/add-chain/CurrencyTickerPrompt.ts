@@ -6,7 +6,7 @@ import { CancelOperationException } from "../../../exceptions/CancelOperationExc
 export class CurrencyTickerPrompt implements Prompt<{
     currencyTicker:string
 }>{
-    async question(validate?: (input: string) => boolean): Promise<{ currencyTicker: string; }> {
+    async question(): Promise<{ currencyTicker: string; }> {
         try {
         
             const res = await inquirer.prompt({

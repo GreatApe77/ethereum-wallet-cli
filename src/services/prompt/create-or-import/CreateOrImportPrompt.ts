@@ -12,7 +12,7 @@ export class CreateOrImportPrompt
 		}>
 {
 	async question(
-		validate?: (input: string) => boolean
+		
 	): Promise<{ option: CreateOrImportPromptOptions }> {
 		const res = await inquirer.prompt({
 			type: "list",

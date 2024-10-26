@@ -11,7 +11,7 @@ export class LoginOrResetPrompt
         }>
 {
     async question(
-        validate?: (input: string) => boolean
+        
     ): Promise<{ option: LoginOrResetPromptOptions }> {
         const res = await inquirer.prompt({
             type: "list",

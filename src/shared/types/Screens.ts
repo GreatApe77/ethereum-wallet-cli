@@ -8,4 +8,5 @@ export type Screens =
 	| "copy-to-clipboard"
 	| "switch-account"
 	| "logout"
-	| "qr-code";
+	| "qr-code"
+	| "networks-menu"

@@ -10,7 +10,7 @@ export class ChainIdPrompt
 		}>
 {
 	async question(
-		validate?: (input: string) => boolean
+		
 	): Promise<{ chainId: number }> {
 		try {
 			const res = await inquirer.prompt({

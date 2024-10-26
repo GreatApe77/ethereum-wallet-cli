@@ -13,7 +13,7 @@ export class ResetWalletController implements Controller{
     ){}
     
     async handle(): Promise<void> {
-        const {confirmation} = await this.confirmationPrompt.question()
+        const {confirmation} = await this.confirmationPrompt.question({})
         if(confirmation){
             EthersWallet.getInstance().reset()
             await this.walletRepository.deleteEncryptedWallet()

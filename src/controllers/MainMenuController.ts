@@ -50,7 +50,7 @@ export class MainMenuController implements Controller {
 				18
 			)} ${connectedNetwork?.getCurrencyTicker()}`
 		);
-		const { option } = await this.mainMenuPrompt.question();
+		const { option } = await this.mainMenuPrompt.question({});
 		switch (option) {
 			case MainMenuOptions.ACCOUNT_QR_CODE:
 				await this.navigationService.navigateTo("qr-code");
@@ -68,10 +68,10 @@ export class MainMenuController implements Controller {
 				await this.navigationService.navigateTo("networks-menu");
 				break;
 			case MainMenuOptions.SEND_TRANSACTION:
-				await this.navigationService.navigateTo("send-transaction");
+				//await this.navigationService.navigateTo("send-transaction");
 				break;
 			case MainMenuOptions.ERC20_MENU:
-				await this.navigationService.navigateTo("erc20-menu");
+				//await this.navigationService.navigateTo("erc20-menu");
 				break;
 			case MainMenuOptions.LOG_OUT:
 				await this.navigationService.navigateTo("logout")

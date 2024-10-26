@@ -24,7 +24,7 @@ export class SwitchAccountController {
 		
         ActionFeedback.render(`Connected Account: ${wallet.getAddress(settings.settings.connectedAccountIndex)}`,"info")
 
-        const { selectedAccount } = await this.switchAccountPrompt.question();
+        const { selectedAccount } = await this.switchAccountPrompt.question({});
         if(selectedAccount === -1) {
             return await this.navigationService.navigateTo("main-menu")
         }
