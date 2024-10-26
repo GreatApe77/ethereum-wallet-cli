@@ -1,3 +1,4 @@
+import { AddChainController } from "../../../controllers/AddChainController.js";
 import { AuthController } from "../../../controllers/AuthController.js";
 import { Controller } from "../../../controllers/Controller.js";
 import { CopyToClipBoardController } from "../../../controllers/CopyToClipboardController.js";
@@ -10,10 +11,16 @@ import { MainMenuController } from "../../../controllers/MainMenuController.js";
 import { NetworksMenuController } from "../../../controllers/NetworksMenuController.js";
 import { ResetWalletController } from "../../../controllers/ResetWalletController.js";
 import { SwitchAccountController } from "../../../controllers/SwitchAccountController.js";
+import { SwitchNetworkController } from "../../../controllers/SwitchNetworkController.js";
 import { NetworkRepositorySqlite } from "../../../models/networks/repository/implementation/NeworkRepositorySqlite.js";
 import { WalletRepositorySqlite } from "../../../models/wallet/repository/implementations/WalletRepositorySqlite.js";
 import { Screens } from "../../../shared/types/Screens.js";
 import { ClipboardServiceClipboardy } from "../../clipboard/implementation/ClipboardServiceClipboardy.js";
+import { ChainIdPrompt } from "../../prompt/add-chain/ChainIdPrompt.js";
+import { ChainNamePrompt } from "../../prompt/add-chain/ChainNamePrompt.js";
+import { ConfirmAddNetworkPrompt } from "../../prompt/add-chain/ConfirmAddNetworkPrompt.js";
+import { CurrencyTickerPrompt } from "../../prompt/add-chain/CurrencyTickerPrompt.js";
+import { RpcUrlPrompt } from "../../prompt/add-chain/RpcUrlPrompt.js";
 import { CreateOrImportPrompt } from "../../prompt/create-or-import/CreateOrImportPrompt.js";
 import { ConfirmationPrompt } from "../../prompt/generate-wallet/ConfirmationPrompt.js";
 import { CreatePasswordPrompt } from "../../prompt/generate-wallet/CreatePasswordPrompt.js";
@@ -25,6 +32,7 @@ import { MainMenuPrompt } from "../../prompt/main-menu-options/MainMenuPrompt.js
 import { NetworksMenuPrompt } from "../../prompt/networks-menu-options/NetworksMenuPrompt.js";
 import { BackToMainMenuPrompt } from "../../prompt/qr-code/BackToMainMenuPrompt.js";
 import { ResetWalletConfirmationPrompt } from "../../prompt/reset/ResetWalletConfirmationPrompt.js";
+import { SwitchNetworkPrompt } from "../../prompt/switch-network/SwitchNetworkPrompt.js";
 import { SwitchAccountPrompt } from "../../prompt/switchAccount/SwitchAccountPrompt.js";
 import { Navigation } from "../Navigation.js";
 
@@ -73,10 +81,25 @@ export class AppNavigation implements Navigation {
 		),
 		logout: new LogoutController(this),
 		"qr-code": new GenerateQrCodeController(new BackToMainMenuPrompt(), this),
-		"networks-menu":new NetworksMenuController(
+		"networks-menu": new NetworksMenuController(
 			new NetworkRepositorySqlite(),
 			new NetworksMenuPrompt(),
 			this
+		),
+		"switch-network": new SwitchNetworkController(
+			new NetworkRepositorySqlite(),
+			new SwitchNetworkPrompt(),
+			this
+		),
+		"add-network": new AddChainController(
+			new ChainIdPrompt(),
+			new ChainNamePrompt(),
+			new CurrencyTickerPrompt(),
+			new RpcUrlPrompt(),
+			new ConfirmAddNetworkPrompt(),
+			new NetworkRepositorySqlite(),
+			this,
+			
 		)
 	};
 

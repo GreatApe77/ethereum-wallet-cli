@@ -113,7 +113,7 @@ export class DatabaseSqlite implements Database {
 				name: 'Ganache',
 				currencyTicker: "ETH",
 				currencyDecimals: 18,
-				rpcUrl: "http://localhost:7545",
+				rpcUrl: "http://localhost:8545",
 			})
 		];
 	

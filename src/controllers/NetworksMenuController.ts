@@ -55,10 +55,10 @@ export class NetworksMenuController implements Controller {
 		const { option } = await this.networkMenuPrompt.question();
 		switch (option) {
 			case NetworksMenuOptions.SWITCH_NETWORK:
-				//return await this.networkMenuPrompt.navigateTo("change-network")
+				return await this.navigationService.navigateTo("switch-network")
 				break;
 			case NetworksMenuOptions.ADD_NETWORK:
-				//return await this.networkMenuPrompt.navigateTo("main-menu")
+				return await this.navigationService.navigateTo("add-network")
 				break;
 			case NetworksMenuOptions.REMOVE_NETWORK:
 				//return await this.networkMenuPrompt.navigateTo("main-menu")
