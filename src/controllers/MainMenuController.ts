@@ -11,11 +11,13 @@ import { Clear } from "../ui/components/Clear.js";
 import { Spinner } from "../ui/components/Spinner.js";
 import { Prompt } from "../services/prompt/Prompt.js";
 import { MainMenuOptions } from "../services/prompt/main-menu-options/MainMenuPrompt.js";
+import { CacheService } from "../services/cache/CacheService.js";
 export class MainMenuController implements Controller {
 	constructor(
 		private readonly NetworkRepository: NetworkRepository,
 		private readonly navigationService: Navigation,
-		private readonly mainMenuPrompt: Prompt<{ option: MainMenuOptions }>
+		private readonly mainMenuPrompt: Prompt<{ option: MainMenuOptions }>,
+		private readonly cacheService:CacheService
 	) {}
 	async handle(): Promise<void> {
 		Clear.render();
@@ -27,9 +29,23 @@ export class MainMenuController implements Controller {
 		if (!connectedNetwork) {
 			throw new Error("Connected Network not found");
 		}
-		const balance = await EthersWallet.getInstance().getBalance(
-			connectedNetwork?.getRpcUrl()
-		);
+		// const balanceCached = this.cacheService.get<bigint>("balance")
+		// let balance:bigint
+		
+		//  const balance = await EthersWallet.getInstance().getBalance(
+		//  	connectedNetwork?.getRpcUrl()
+		//  );
+		let balance = this.cacheService.get<bigint>(`${settings.settings.connectedChainId}-${settings.settings.connectedAccountIndex}-balance`)
+		
+		if(balance===null){
+			balance = await EthersWallet.getInstance().getBalance(
+				connectedNetwork.getRpcUrl()
+			)
+			this.cacheService.set(
+				`${settings.settings.connectedChainId}-${settings.settings.connectedAccountIndex}-balance`
+				,balance)
+		}
+
 		Spinner.success();
 		Clear.render();
 		FancyDivider.render();

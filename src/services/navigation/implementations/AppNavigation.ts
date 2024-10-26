@@ -1,3 +1,4 @@
+import { AppContainer } from "../../../AppContainer.js";
 import { AddChainController } from "../../../controllers/AddChainController.js";
 import { AuthController } from "../../../controllers/AuthController.js";
 import { Controller } from "../../../controllers/Controller.js";
@@ -37,73 +38,149 @@ import { SwitchAccountPrompt } from "../../prompt/switchAccount/SwitchAccountPro
 import { Navigation } from "../Navigation.js";
 
 export class AppNavigation implements Navigation {
-	controllers: Record<Screens, Controller> = {
-		"generate-wallet": new GenerateNewWalletController(
-			new ConfirmationPrompt(),
-			new CreatePasswordPrompt(),
-			new WalletRepositorySqlite(),
-			this
-		),
-		auth: new AuthController(
-			new CreateOrImportPrompt(),
-			new LoginOrResetPrompt(),
-			this,
-			new WalletRepositorySqlite()
-		),
-		login: new LoginController(
-			new WalletRepositorySqlite(),
-			this,
-			new WalletPasswordPrompt()
-		),
-		reset: new ResetWalletController(
-			new ResetWalletConfirmationPrompt(),
-			new WalletRepositorySqlite(),
-			this
-		),
-		"import-wallet": new ImportWalletController(
-			new ImportedWalletMnemonicPrompt(),
-			new WalletRepositorySqlite(),
-			new CreatePasswordForImportedWalletPrompt(),
-			this
-		),
-		"main-menu": new MainMenuController(
-			new NetworkRepositorySqlite(),
-			this,
-			new MainMenuPrompt()
-		),
-		"copy-to-clipboard": new CopyToClipBoardController(
-			new ClipboardServiceClipboardy(),
-			this
-		),
-		"switch-account": new SwitchAccountController(
-			new SwitchAccountPrompt(),
-			this
-		),
-		logout: new LogoutController(this),
-		"qr-code": new GenerateQrCodeController(new BackToMainMenuPrompt(), this),
-		"networks-menu": new NetworksMenuController(
-			new NetworkRepositorySqlite(),
-			new NetworksMenuPrompt(),
-			this
-		),
-		"switch-network": new SwitchNetworkController(
-			new NetworkRepositorySqlite(),
-			new SwitchNetworkPrompt(),
-			this
-		),
-		"add-network": new AddChainController(
-			new ChainIdPrompt(),
-			new ChainNamePrompt(),
-			new CurrencyTickerPrompt(),
-			new RpcUrlPrompt(),
-			new ConfirmAddNetworkPrompt(),
-			new NetworkRepositorySqlite(),
-			this,
+	private appContainer: AppContainer = AppContainer.getInstance()
+	private controllers: Record<Screens, Controller> | undefined;
+	// controllers: Record<Screens, Controller> = {
+	// 	"generate-wallet": new GenerateNewWalletController(
+	// 		new ConfirmationPrompt(),
+	// 		new CreatePasswordPrompt(),
+	// 		new WalletRepositorySqlite(),
+	// 		this
+	// 	),
+	// 	auth: new AuthController(
+	// 		new CreateOrImportPrompt(),
+	// 		new LoginOrResetPrompt(),
+	// 		this,
+	// 		new WalletRepositorySqlite()
+	// 	),
+	// 	login: new LoginController(
+	// 		new WalletRepositorySqlite(),
+	// 		this,
+	// 		new WalletPasswordPrompt()
+	// 	),
+	// 	reset: new ResetWalletController(
+	// 		new ResetWalletConfirmationPrompt(),
+	// 		new WalletRepositorySqlite(),
+	// 		this
+	// 	),
+	// 	"import-wallet": new ImportWalletController(
+	// 		new ImportedWalletMnemonicPrompt(),
+	// 		new WalletRepositorySqlite(),
+	// 		new CreatePasswordForImportedWalletPrompt(),
+	// 		this
+	// 	),
+	// 	"main-menu": new MainMenuController(
+	// 		new NetworkRepositorySqlite(),
+	// 		this,
+	// 		new MainMenuPrompt()
+	// 	),
+	// 	"copy-to-clipboard": new CopyToClipBoardController(
+	// 		new ClipboardServiceClipboardy(),
+	// 		this
+	// 	),
+	// 	"switch-account": new SwitchAccountController(
+	// 		new SwitchAccountPrompt(),
+	// 		this
+	// 	),
+	// 	logout: new LogoutController(this),
+	// 	"qr-code": new GenerateQrCodeController(new BackToMainMenuPrompt(), this),
+	// 	"networks-menu": new NetworksMenuController(
+	// 		new NetworkRepositorySqlite(),
+	// 		new NetworksMenuPrompt(),
+	// 		this
+	// 	),
+	// 	"switch-network": new SwitchNetworkController(
+	// 		new NetworkRepositorySqlite(),
+	// 		new SwitchNetworkPrompt(),
+	// 		this
+	// 	),
+	// 	"add-network": new AddChainController(
+	// 		new ChainIdPrompt(),
+	// 		new ChainNamePrompt(),
+	// 		new CurrencyTickerPrompt(),
+	// 		new RpcUrlPrompt(),
+	// 		new ConfirmAddNetworkPrompt(),
+	// 		new NetworkRepositorySqlite(),
+	// 		this,
 			
-		)
-	};
-
+	// 	)
+	// };
+	public bootstrapControllers():void{
+		this.controllers = {
+			"generate-wallet": new GenerateNewWalletController(
+				this.appContainer.getService("ConfirmationPrompt"),
+				this.appContainer.getService("CreatePasswordPrompt"),
+				this.appContainer.getService("WalletRepository"),
+				this
+			),
+			auth: new AuthController(
+				this.appContainer.getService("CreateOrImportPrompt"),
+				this.appContainer.getService("LoginOrResetPrompt"),
+				this,
+				this.appContainer.getService("WalletRepository")
+			),
+			login: new LoginController(
+				this.appContainer.getService("WalletRepository"),
+				this,
+				this.appContainer.getService("WalletPasswordPrompt")
+			),
+			reset: new ResetWalletController(
+				this.appContainer.getService("ResetWalletConfirmationPrompt"),
+				this.appContainer.getService("WalletRepository"),
+				this
+			),
+			"import-wallet": new ImportWalletController(
+				this.appContainer.getService("ImportedWalletMnemonicPrompt"),
+				this.appContainer.getService("WalletRepository"),
+				this.appContainer.getService("CreatePasswordForImportedWalletPrompt"),
+				this
+			),
+			"main-menu": new MainMenuController(
+				this.appContainer.getService("NetworkRepository"),
+				this,
+				this.appContainer.getService("MainMenuPrompt"),
+				this.appContainer.getService("CacheService")
+			),
+			"copy-to-clipboard": new CopyToClipBoardController(
+				this.appContainer.getService("ClipboardService"),
+				this
+			),
+			"switch-account": new SwitchAccountController(
+				this.appContainer.getService("SwitchAccountPrompt"),
+				this
+			),
+			logout: new LogoutController(this),
+			"qr-code": new GenerateQrCodeController(
+				this.appContainer.getService("BackToMainMenuPrompt"),
+				this	
+			),
+			"networks-menu": new NetworksMenuController(
+				this.appContainer.getService("NetworkRepository"),
+				this.appContainer.getService("NetworksMenuPrompt"),
+				this
+			),
+			"switch-network": new SwitchNetworkController(
+				this.appContainer.getService("NetworkRepository"),
+				this.appContainer.getService("SwitchNetworkPrompt"),
+				this
+			),
+			"add-network": new AddChainController(
+				this.appContainer.getService("ChainIdPrompt"),
+				this.appContainer.getService("ChainNamePrompt"),
+				this.appContainer.getService("CurrencyTickerPrompt"),
+				this.appContainer.getService("RpcUrlPrompt"),
+				this.appContainer.getService("ConfirmAddNetworkPrompt"),
+				this.appContainer.getService("NetworkRepository"),
+				this,
+				
+			),
+			
+		};
+	}
+	private getController(screen: Screens): Controller {
+		return this.controllers![screen];
+	}
 	async navigateTo(screen: Screens): Promise<void> {
-		await this.controllers[screen].handle();
+		await this.getController(screen).handle();
 	}
 }
